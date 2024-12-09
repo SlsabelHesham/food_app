@@ -1,0 +1,11 @@
+<resources>
+    <!-- Firebase configuration -->
+    <string name="default_web_client_id">985334291144-24t15oqqckkcilvovnlajqt7bbf8a7gj.apps.googleusercontent.com</string>
+    <string name="firebase_database_url">https://cobalt-mantis-366122.firebaseio.com</string>
+    <string name="gcm_defaultSenderId">985334291144</string>
+    <string name="google_api_key">AIzaSyDzGY43dqVqem-3kCK_IZdfuzjwEX9Lk-4</string>
+    <string name="google_app_id">1:985334291144:android:11de121642e0da0afea3fd</string>
+    <string name="google_crash_reporting_api_key">AIzaSyDzGY43dqVqem-3kCK_IZdfuzjwEX9Lk-4</string>
+    <string name="project_id">cobalt-mantis-366122</string>
+    <string name="google_storage_bucket">cobalt-mantis-366122.appspot.com</string>
+</resources>

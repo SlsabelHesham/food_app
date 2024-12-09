@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "985334291144",
+    "project_id": "cobalt-mantis-366122",
+    "storage_bucket": "cobalt-mantis-366122.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:985334291144:android:11de121642e0da0afea3fd",
+        "android_client_info": {
+          "package_name": "com.food.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "985334291144-24t15oqqckkcilvovnlajqt7bbf8a7gj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzGY43dqVqem-3kCK_IZdfuzjwEX9Lk-4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "985334291144-24t15oqqckkcilvovnlajqt7bbf8a7gj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:985334291144:android:9315377cd72651fdfea3fd",
+        "android_client_info": {
+          "package_name": "com.udacity.fourthproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "985334291144-24t15oqqckkcilvovnlajqt7bbf8a7gj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzGY43dqVqem-3kCK_IZdfuzjwEX9Lk-4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "985334291144-24t15oqqckkcilvovnlajqt7bbf8a7gj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
