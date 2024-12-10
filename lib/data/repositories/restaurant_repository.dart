@@ -55,8 +55,6 @@ class RestaurantRepository {
     return allMeals;
   }
 
-
-
 List<Map<String, dynamic>> filterRestaurants(
       List<Map<String, dynamic>> restaurants,
       String searchQuery,

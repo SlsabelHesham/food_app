@@ -19,8 +19,6 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     presenter.loadHomeData();
-          print("test filter hh");
-
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 246, 247, 254),
       body: SafeArea(

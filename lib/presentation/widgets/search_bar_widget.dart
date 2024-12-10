@@ -22,7 +22,10 @@ class SearchBarWidget extends StatelessWidget {
       padding: const EdgeInsets.only(left: 25, right: 25, bottom: 20),
       child: Row(
         children: [
-          _buildSearchEditText(context),
+          Flexible(
+
+          child: _buildSearchEditText(context),
+          ),
           const SizedBox(width: 10),
           Padding(
             padding: const EdgeInsets.only(right: 0),
@@ -53,6 +56,8 @@ class SearchBarWidget extends StatelessWidget {
 
   Widget _buildSearchEditText(BuildContext context) {
     return SearchEditText(
+      controller: TextEditingController() ,
+      enabled: false,
       hintText: "What do you want to order?",
       searchIconAsset: "assets/images/icon_search.png",
       hintColor: const Color.fromARGB(255, 218, 99, 23).withOpacity(0.2),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class SearchEditText extends StatelessWidget {
+  final TextEditingController controller;
+  final bool enabled;
   final String hintText;
   final String searchIconAsset;
   final Color hintColor;
@@ -10,6 +12,8 @@ class SearchEditText extends StatelessWidget {
 
   const SearchEditText({
     super.key,
+    required this.controller,
+    required this.enabled,
     required this.hintText,
     required this.searchIconAsset,
     required this.hintColor,
@@ -20,11 +24,11 @@ class SearchEditText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: GestureDetector(
+    return GestureDetector(
         onTap: onTap,
         child: TextField(
-          enabled: false,
+          enabled: enabled,
+          controller: controller,
           decoration: InputDecoration(
             hintText: hintText,
             hintStyle: TextStyle(color: hintColor),
@@ -38,7 +42,7 @@ class SearchEditText extends StatelessWidget {
             fillColor: fillColor,
           ),
         ),
-      ),
+      //),
     );
   }
 }

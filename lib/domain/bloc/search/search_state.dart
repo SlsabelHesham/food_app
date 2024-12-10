@@ -1,17 +1,17 @@
-abstract class FilterState {}
+abstract class SearchState {}
 
-class FilterInitialState extends FilterState {}
+class SearchInitialState extends SearchState {}
 
-class FilterLoadingState extends FilterState {}
+class FilterLoadingState extends SearchState {}
 
-class FilterLoadedState extends FilterState {
+class SearchLoadedState extends SearchState {
   final List<Map<String, dynamic>> filteredMeals;
 
-  FilterLoadedState(this.filteredMeals);
+  SearchLoadedState(this.filteredMeals);
 }
 
-class FilterErrorState extends FilterState {
+class SearchErrorState extends SearchState {
   final String error;
 
-  FilterErrorState(this.error);
+  SearchErrorState(this.error);
 }
