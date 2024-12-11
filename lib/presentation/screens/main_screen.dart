@@ -38,6 +38,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
       body: _screens[_currentIndex],
       extendBody: true,
@@ -45,7 +46,7 @@ class _MainScreenState extends State<MainScreen> {
       bottomNavigationBar: Container(
         margin: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: colorScheme.onPrimary,
           borderRadius: BorderRadius.circular(22),
           boxShadow: [
             BoxShadow(
@@ -60,9 +61,8 @@ class _MainScreenState extends State<MainScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           child: GNav(
             backgroundColor: Colors.transparent,
-            color: Colors.white,
             activeColor: const Color.fromARGB(255, 91, 174, 154),
-            tabBackgroundColor: const Color.fromARGB(255, 180, 233, 220),
+            tabBackgroundColor: colorScheme.secondary.withOpacity(0.5),
             gap: 8,
             padding: const EdgeInsets.all(16),
             onTabChange: (index) {
@@ -72,31 +72,29 @@ class _MainScreenState extends State<MainScreen> {
               GButton(
                 icon: Icons.home_filled,
                 text: 'Home',
-                textColor: Colors.black,
-                iconColor: const Color.fromARGB(255, 135, 210, 191),
+                textColor: colorScheme.onSecondary,
+                iconColor: colorScheme.secondary,
                 borderRadius: BorderRadius.circular(16),
-
               ),
               GButton(
                 icon: Icons.person,
                 text: 'Profile',
-                textColor: Colors.black,
-                iconColor: const Color.fromARGB(255, 135, 210, 191),
+                textColor: colorScheme.onSecondary,
+                iconColor: colorScheme.secondary,
                 borderRadius: BorderRadius.circular(16),
-
               ),
               GButton(
                 icon: Icons.shopping_cart,
                 text: 'Shopping',
-                textColor: Colors.black,
-                iconColor: const Color.fromARGB(255, 135, 210, 191),
+                textColor: colorScheme.onSecondary,
+                iconColor: colorScheme.secondary,
                 borderRadius: BorderRadius.circular(16),
               ),
               GButton(
                 icon: Icons.chat,
                 text: 'Chat',
-                textColor: Colors.black,
-                iconColor: const Color.fromARGB(255, 135, 210, 191),
+                textColor: colorScheme.onSecondary,
+                iconColor: colorScheme.secondary,
                 borderRadius: BorderRadius.circular(16),
               ),
             ],

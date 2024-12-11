@@ -16,7 +16,6 @@ class ResultsScreen extends StatelessWidget {
     final List<dynamic> value = data['restaurants'];
 
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 246, 247, 254),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

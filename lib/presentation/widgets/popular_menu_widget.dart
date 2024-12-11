@@ -22,13 +22,14 @@ class MenuCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.only(left: 25, right: 25),
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 8.0),
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: colorScheme.onPrimary,
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
@@ -64,7 +65,7 @@ class MenuCard extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     meal.restaurantName,
-                    style: TextStyles.cardSecondTitle(),
+                    style: TextStyles.cardSecondTitle(context),
                   ),
                 ],
               ),
@@ -76,7 +77,7 @@ class MenuCard extends StatelessWidget {
                   padding: const EdgeInsets.all(8),
                   child: Text(
                     meal.price,
-                    style: TextStyles.priceText(),
+                    style: TextStyles.priceText(context),
                   ),
                 ),
               ],

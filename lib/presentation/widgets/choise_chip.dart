@@ -22,20 +22,21 @@ class GenericChoiceChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return GestureDetector(
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         decoration: BoxDecoration(
           color: isSelected
-              ? selectedColor.withOpacity(0.5)
-              : unselectedColor.withOpacity(0.1),
+              ? colorScheme.onPrimaryContainer.withOpacity(0.5)
+              : colorScheme.onPrimaryContainer.withOpacity(0.1),
           borderRadius: BorderRadius.circular(15),
         ),
         child: Text(
           label,
           style: TextStyle(
-            color: isSelected ? selectedTextColor : unselectedTextColor,
+            color: isSelected ? colorScheme.onPrimaryContainer : colorScheme.onPrimaryContainer,
             fontWeight: FontWeight.bold,
           ),
         ),

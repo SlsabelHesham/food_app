@@ -4,17 +4,17 @@ import 'package:food_app/styles/text_styles.dart';
 class HeaderWidget extends StatelessWidget {
   final String headerText;
   final String imageAsset;
-  final Color imageBackgroundColor;
 
   const HeaderWidget({
     super.key,
     required this.headerText,
     required this.imageAsset,
-    this.imageBackgroundColor = Colors.white,
   });
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -29,19 +29,19 @@ class HeaderWidget extends StatelessWidget {
             padding: const EdgeInsets.only(top: 30, left: 31, bottom: 18),
             child: Text(
               headerText,
-              style: TextStyles.headerHeadline(),
+              style: TextStyles.headerHeadline(context),
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(right: 39),
             child: Container(
               decoration: BoxDecoration(
-                color: imageBackgroundColor,
+                color: colorScheme.onPrimary,
                 borderRadius: BorderRadius.circular(15.0),
                 boxShadow: [
                   BoxShadow(
                     color: const Color.fromARGB(255, 196, 192, 192)
-                        .withOpacity(0.3),
+                        .withOpacity(0.15),
                     offset: const Offset(4, 4),
                     blurRadius: 10,
                     spreadRadius: 3,

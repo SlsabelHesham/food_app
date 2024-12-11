@@ -8,6 +8,7 @@ import 'package:food_app/data/datasources/restaurant_datasource.dart';
 import 'package:food_app/data/repositories/restaurant_repository.dart';
 import 'package:food_app/domain/bloc/search/search_bloc.dart';
 import 'package:food_app/presentation/screens/search/search_presenter.dart';
+import 'package:food_app/styles/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,6 +50,9 @@ class FoodApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       onGenerateRoute: appRouter.generateRoute,
+      theme: AppTheme.lightTheme, 
+      darkTheme: AppTheme.darkTheme, 
+      themeMode: ThemeMode.system,
     );
   }
 }

@@ -28,7 +28,7 @@ class SectionTitle extends StatelessWidget {
             onPressed: onViewMore,
             child: Text(
               viewMoreText,
-              style: TextStyles.secondTitle(),
+              style: TextStyles.secondTitle(context),
             ),
           ),
         ],

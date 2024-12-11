@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/core/resources/strings.dart';
 import 'package:food_app/domain/bloc/search/search_bloc.dart';
 import 'package:food_app/presentation/widgets/search_edit_text_widget.dart';
+import 'package:food_app/styles/theme.dart';
 
 class SearchBarWidget extends StatelessWidget {
   final BuildContext context;
@@ -56,14 +57,15 @@ class SearchBarWidget extends StatelessWidget {
   }
 
   Widget _buildSearchEditText(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return SearchEditText(
       controller: TextEditingController(),
       enabled: false,
       hintText: "What do you want to order?",
-      searchIconAsset: "assets/images/icon_search.png",
-      hintColor: const Color.fromARGB(255, 218, 99, 23).withOpacity(0.2),
-      fillColor: const Color.fromARGB(255, 249, 168, 77).withOpacity(0.1),
-      iconColor: const Color.fromARGB(255, 218, 99, 23),
+      searchIconAsset: AppTheme.getSearchIconAsset(context),
+      hintColor: colorScheme.onPrimaryContainer.withOpacity(0.2),
+      fillColor: colorScheme.onPrimaryContainer.withOpacity(0.1),
+      iconColor: colorScheme.onPrimaryContainer,
       onTap: () {
         Navigator.pushNamed(
           context,

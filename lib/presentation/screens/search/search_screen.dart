@@ -7,6 +7,8 @@ import 'package:food_app/domain/bloc/search/search_state.dart';
 import 'package:food_app/presentation/widgets/header_widget.dart';
 import 'package:food_app/presentation/widgets/search_edit_text_widget.dart';
 import 'package:food_app/presentation/widgets/choise_chip.dart';
+import 'package:food_app/styles/text_styles.dart';
+import 'package:food_app/styles/theme.dart';
 
 class FilterScreen extends StatefulWidget {
   final SearchBloc searchBloc;
@@ -54,10 +56,9 @@ class _FiltersScreenState extends State<FilterScreen> {
                           children: [
                             _buildSearchEditText(context),
                             const SizedBox(height: 20),
-                            const Text(
+                            Text(
                               "Type",
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
+                              style: TextStyles.mainTitle(),
                             ),
                             const SizedBox(height: 10),
                             Wrap(
@@ -84,10 +85,9 @@ class _FiltersScreenState extends State<FilterScreen> {
                               ],
                             ),
                             const SizedBox(height: 20),
-                            const Text(
+                            Text(
                               "Location",
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
+                              style: TextStyles.mainTitle(),
                             ),
                             const SizedBox(height: 10),
                             Wrap(
@@ -123,10 +123,9 @@ class _FiltersScreenState extends State<FilterScreen> {
                               ],
                             ),
                             const SizedBox(height: 20),
-                            const Text(
+                            Text(
                               "Food",
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
+                              style: TextStyles.mainTitle(),
                             ),
                             const SizedBox(height: 10),
                             Wrap(
@@ -210,13 +209,9 @@ class _FiltersScreenState extends State<FilterScreen> {
                       borderRadius: BorderRadius.circular(15),
                     ),
                   ),
-                  child: const Text(
+                  child: Text(
                     "Search",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyles.buttonText(),
                   ),
                 ),
               ),
@@ -242,7 +237,7 @@ class _FiltersScreenState extends State<FilterScreen> {
                 child: Center(
                   child: BlocBuilder<SearchBloc, SearchState>(
                     builder: (context, state) {
-                      if(state is InitialState){
+                      if (state is InitialState) {
                         return const SizedBox();
                       }
                       if (state is LoadingState) {
@@ -262,14 +257,15 @@ class _FiltersScreenState extends State<FilterScreen> {
   }
 
   Widget _buildSearchEditText(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return SearchEditText(
       enabled: true,
       controller: _searchController,
       hintText: "What do you want to order?",
-      searchIconAsset: "assets/images/icon_search.png",
-      hintColor: const Color.fromARGB(255, 218, 99, 23).withOpacity(0.2),
-      fillColor: const Color.fromARGB(255, 249, 168, 77).withOpacity(0.1),
-      iconColor: const Color.fromARGB(255, 218, 99, 23),
+      searchIconAsset: AppTheme.getSearchIconAsset(context),
+      hintColor: colorScheme.onPrimaryContainer.withOpacity(0.2),
+      fillColor: colorScheme.onPrimaryContainer.withOpacity(0.1),
+      iconColor: colorScheme.onPrimaryContainer,
       onTap: () {},
     );
   }

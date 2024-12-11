@@ -10,6 +10,7 @@ import 'package:food_app/presentation/widgets/popular_menu_widget.dart';
 import 'package:food_app/presentation/widgets/restaurant_card_widget.dart';
 import 'package:food_app/presentation/widgets/search_bar_widget.dart';
 import 'package:food_app/presentation/widgets/section_title_widget.dart';
+import 'package:food_app/styles/theme.dart';
 import '../../../domain/bloc/home/home_bloc.dart';
 
 class Home extends StatelessWidget {
@@ -20,7 +21,6 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     presenter.loadHomeData();
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 246, 247, 254),
       body: SafeArea(
         child: BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
@@ -64,7 +64,8 @@ Widget _buildSearchBar(BuildContext context) {
  return SearchBarWidget(
     context: context,
     searchHintText: "",
-    filterImageAsset: "assets/images/filter.png",
+    filterImageAsset: AppTheme.getFilterIconAsset(context),
+
   );
 }
 

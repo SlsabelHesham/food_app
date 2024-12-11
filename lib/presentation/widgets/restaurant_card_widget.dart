@@ -9,9 +9,11 @@ class RestaurantCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorScheme.onPrimary,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -44,7 +46,7 @@ class RestaurantCard extends StatelessWidget {
             padding: const EdgeInsets.only(top: 4, bottom: 26),
             child: Text(
               restaurant.time,
-              style: TextStyles.cardSecondTitle() ,
+              style: TextStyles.cardSecondTitle(context),
             ),
           ),
         ],
@@ -90,13 +92,13 @@ class RestaurantGridContent extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: GridView.builder(
-        shrinkWrap: true, 
+        shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           crossAxisSpacing: 10.0,
           mainAxisSpacing: 10.0,
-          childAspectRatio: 3 / 4, 
+          childAspectRatio: 3 / 4,
         ),
         itemCount: restaurants.length,
         itemBuilder: (context, index) {
