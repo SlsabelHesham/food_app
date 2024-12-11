@@ -6,5 +6,6 @@ class Strings {
   static const String storageBucket = "cobalt-mantis-366122.firebasestorage.app";
   static const String mainScreen = "/";
   static const String filterScreen = "filter";
+  static const String resultScreen = "results";
   static const String unknownRestaurant = "Unknown Restaurant";
 }

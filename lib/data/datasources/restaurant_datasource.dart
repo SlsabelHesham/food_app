@@ -20,4 +20,39 @@ class RestaurantDataSource {
             })
         .toList();
   }
+
+  Future<List<Map<String, dynamic>?>> fetchRestaurantsByMealName(
+      String mealName) async {
+    try {
+      final QuerySnapshot snapshot =
+          await FirebaseFirestore.instance.collection('restaurants').get();
+      return snapshot.docs
+          .map((doc) {
+            final meals = List<Map<String, dynamic>>.from(doc['meals'] ?? []);
+
+            final filteredMeals =
+                meals.where((meal) => meal['name'] == mealName).toList();
+
+            if (filteredMeals.isNotEmpty) {
+              return {
+                "name": doc['name'] ?? 'Unknown Restaurant',
+                "location": {
+                  "latitude": doc['location']['latitude'] ?? 0,
+                  "longitude": doc['location']['longitude'] ?? 0,
+                },
+                "rate": doc['rate'] ?? 0,
+                "time": doc['time'] ?? "- min",
+                "image": doc['image'] ?? "",
+                "meals": filteredMeals,
+              };
+            } else {
+              return null;
+            }
+          })
+          .where((restaurant) => restaurant != null)
+          .toList();
+    } catch (e) {
+      return [];
+    }
+  }
 }

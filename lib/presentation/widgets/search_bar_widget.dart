@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/core/resources/strings.dart';
+import 'package:food_app/domain/bloc/search/search_bloc.dart';
 import 'package:food_app/presentation/widgets/search_edit_text_widget.dart';
 
 class SearchBarWidget extends StatelessWidget {
@@ -23,8 +25,7 @@ class SearchBarWidget extends StatelessWidget {
       child: Row(
         children: [
           Flexible(
-
-          child: _buildSearchEditText(context),
+            child: _buildSearchEditText(context),
           ),
           const SizedBox(width: 10),
           Padding(
@@ -56,7 +57,7 @@ class SearchBarWidget extends StatelessWidget {
 
   Widget _buildSearchEditText(BuildContext context) {
     return SearchEditText(
-      controller: TextEditingController() ,
+      controller: TextEditingController(),
       enabled: false,
       hintText: "What do you want to order?",
       searchIconAsset: "assets/images/icon_search.png",
@@ -67,6 +68,7 @@ class SearchBarWidget extends StatelessWidget {
         Navigator.pushNamed(
           context,
           Strings.filterScreen,
+          arguments: context.read<SearchBloc>(),
         );
       },
     );

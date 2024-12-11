@@ -2,7 +2,6 @@ import 'package:food_app/core/utils/helper.dart';
 import '../datasources/restaurant_datasource.dart';
 import 'package:location/location.dart';
 
-
 class RestaurantRepository {
   final RestaurantDataSource dataSource;
 
@@ -55,48 +54,8 @@ class RestaurantRepository {
     return allMeals;
   }
 
-List<Map<String, dynamic>> filterRestaurants(
-      List<Map<String, dynamic>> restaurants,
-      String searchQuery,
-      String selectedType,
-      String selectedLocation,
-      List<String> selectedFoods) {
-    var filteredMeals = <Map<String, dynamic>>[];
-
-    for (final restaurant in restaurants) {
-      if (searchQuery.isNotEmpty) {
-        for (final meal in restaurant['meals']) {
-          if (meal['name'] == searchQuery) {
-            filteredMeals.add({
-              ...meal,
-              'restaurant_name': restaurant['name'],
-              'restaurant_image': restaurant['image'],
-              'location': restaurant['location'],
-            });
-          }
-        }
-      }
-    }
-
-    if (selectedType.isNotEmpty) {
-      filteredMeals = filteredMeals
-          .where((meal) => selectedType == "Restaurant"
-              ? meal['restaurant_name'] != null
-              : meal['meal_name'] != null)
-          .toList();
-    }
-
-    if (selectedLocation.isNotEmpty) {
-      // distance calc
-    }
-
-    if (selectedFoods.isNotEmpty) {
-      filteredMeals = filteredMeals.where((meal) {
-        final mealType = meal['type']?.toString().toLowerCase();
-        return mealType != null && selectedFoods.contains(mealType);
-      }).toList();
-    }
-
-    return filteredMeals;
+  Future<List<Object?>> getFilteredRestaurants(
+      String mealName) async {
+    return await dataSource.fetchRestaurantsByMealName(mealName);
   }
 }

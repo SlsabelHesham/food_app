@@ -1,17 +1,27 @@
-abstract class SearchState {}
+import 'package:equatable/equatable.dart';
 
-class SearchInitialState extends SearchState {}
-
-class FilterLoadingState extends SearchState {}
-
-class SearchLoadedState extends SearchState {
-  final List<Map<String, dynamic>> filteredMeals;
-
-  SearchLoadedState(this.filteredMeals);
+abstract class SearchState extends Equatable {
+  @override
+  List<Object> get props => [];
 }
 
-class SearchErrorState extends SearchState {
-  final String error;
+class LoadingState extends SearchState {}
 
-  SearchErrorState(this.error);
+class LoadedState extends SearchState {
+    final String type;
+  final List<Map<String, dynamic>> restaurants;
+
+  LoadedState({required this.type, required this.restaurants});
+
+  @override
+  List<Object> get props => [restaurants];
+}
+
+class ErrorState extends SearchState {
+  final String message;
+
+  ErrorState({required this.message});
+
+  @override
+  List<Object> get props => [message];
 }

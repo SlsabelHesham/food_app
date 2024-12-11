@@ -8,8 +8,8 @@ class ResultsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String key = data['key'];
-    final List<dynamic> value = data['value'];
+    final String key = data['type'];
+    final List<dynamic> value = data['restaurants'];
 
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 246, 247, 254),
@@ -29,7 +29,7 @@ class ResultsScreen extends StatelessWidget {
               )
             else
               Expanded(
-                child: key == "Menu"
+                child: key == "Meals"
                     ? ListView.builder(
                         itemCount: value.length,
                         itemBuilder: (context, index) {
@@ -37,7 +37,7 @@ class ResultsScreen extends StatelessWidget {
                           return _buildMenuCard(
                             meal['meal_name'] ?? "وجبة غير معروفة",
                             meal['restaurant_name'] ?? "مطعم غير معروف",
-                            meal['meal_image_url'] ?? "",
+                            meal['meal_image'] ?? "",
                             meal['meal_price'].toString(),
                           );
                         },
@@ -72,6 +72,7 @@ class ResultsScreen extends StatelessWidget {
   
   Widget _buildMenuCard(
       String name, String restaurantName, String imageUrl, String price) {
+        print("dataaaaa ${name} ${restaurantName} ${imageUrl} ${price}");
     return Padding(
       padding: const EdgeInsets.only(left: 25, right: 25),
       child: Container(

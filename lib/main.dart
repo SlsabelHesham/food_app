@@ -6,6 +6,8 @@ import 'package:food_app/core/resources/strings.dart';
 import 'package:food_app/domain/bloc/home/home_bloc.dart';
 import 'package:food_app/data/datasources/restaurant_datasource.dart';
 import 'package:food_app/data/repositories/restaurant_repository.dart';
+import 'package:food_app/domain/bloc/search/search_bloc.dart';
+import 'package:food_app/presentation/screens/search/search_presenter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,7 +27,12 @@ void main() async {
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => HomeBloc(RestaurantRepository(RestaurantDataSource()))),
+        BlocProvider(
+            create: (_) =>
+                HomeBloc(RestaurantRepository(RestaurantDataSource()))),
+        BlocProvider<SearchBloc>(
+          create: (context) => SearchBloc(RestaurantPresenter(RestaurantDataSource())),
+        ),
       ],
       child: FoodApp(appRouter: AppRouter()),
     ),

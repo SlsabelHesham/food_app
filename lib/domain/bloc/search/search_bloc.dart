@@ -1,37 +1,29 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_app/data/repositories/restaurant_repository.dart';
 import 'package:food_app/domain/bloc/search/search_event.dart';
 import 'package:food_app/domain/bloc/search/search_state.dart';
+import 'package:food_app/presentation/screens/search/search_presenter.dart';
+
 
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
-  final RestaurantRepository repository;
+  final RestaurantPresenter presenter;
 
-  String _searchQuery = "";
-  final String _selectedType = "";
-  final String _selectedLocation = "";
-  final List<String> _selectedFoods = [];
+  SearchBloc(this.presenter) : super(LoadingState()) {
+    on<SearchEvent>(_onSearch);
+  }
 
-  SearchBloc(this.repository) : super(SearchInitialState()) {
-    on<SearchQueryChanged>((event, emit) {
-      _searchQuery = event.searchQuery;
-    });
-
-
-
-    on<ApplyFilters>((event, emit) async {
-      emit(FilterLoadingState());
-
-      try {
-        final results = await repository.getAllRestaurants();
-
-        List<Map<String, dynamic>> filteredMeals =
-            repository.filterRestaurants(results, _searchQuery, _selectedType,
-                _selectedLocation, _selectedFoods);
-
-        emit(SearchLoadedState(filteredMeals));
-      } catch (e) {
-        emit(SearchErrorState(e.toString()));
-      }
-    });
+  Future<void> _onSearch(SearchEvent event, Emitter<SearchState> emit) async {
+    emit(LoadingState());
+    try {
+      final (type, restaurants) = await presenter.searchAndFilter(
+        event.mealName,
+        event.selectedType,
+        event.selectedLocation,
+        event.selectedFoods,
+      );
+      
+      emit(LoadedState(type: type, restaurants: restaurants));
+    } catch (e) {
+      emit(ErrorState(message: e.toString()));
+    }
   }
 }
