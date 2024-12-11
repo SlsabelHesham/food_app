@@ -278,8 +278,6 @@ class _FiltersScreenState extends State<FilterScreen> {
     return const HeaderWidget(
       headerText: "Find Your \nFavorite Food",
       imageAsset: "assets/images/pattern.png",
-      fontSize: 28,
-      fontWeight: FontWeight.bold,
     );
   }
 }

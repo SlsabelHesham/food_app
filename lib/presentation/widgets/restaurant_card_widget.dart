@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/domain/models/restaurants.dart';
+import 'package:food_app/styles/text_styles.dart';
 
 class RestaurantCard extends StatelessWidget {
   final Restaurant restaurant;
@@ -36,14 +37,14 @@ class RestaurantCard extends StatelessWidget {
             padding: const EdgeInsets.only(right: 25, left: 25, top: 17),
             child: Text(
               restaurant.name,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              style: TextStyles.cardTitle(),
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 4, bottom: 26),
             child: Text(
               restaurant.time,
-              style: TextStyle(color: Colors.grey[600], fontSize: 14),
+              style: TextStyles.cardSecondTitle() ,
             ),
           ),
         ],

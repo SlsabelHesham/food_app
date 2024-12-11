@@ -1,24 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/styles/text_styles.dart';
 
 class SectionTitle extends StatelessWidget {
   final String title;
   final VoidCallback onViewMore;
   final String viewMoreText;
-  final TextStyle titleStyle;
-  final TextStyle viewMoreStyle;
 
   const SectionTitle({
     super.key,
     required this.title,
     required this.onViewMore,
     this.viewMoreText = "View More",
-    this.titleStyle = const TextStyle(
-      fontSize: 18,
-      fontWeight: FontWeight.bold,
-    ),
-    this.viewMoreStyle = const TextStyle(
-      color: Color.fromARGB(255, 255, 124, 50),
-    ),
   });
 
   @override
@@ -30,13 +22,13 @@ class SectionTitle extends StatelessWidget {
         children: [
           Text(
             title,
-            style: titleStyle,
+            style: TextStyles.mainTitle(),
           ),
           TextButton(
             onPressed: onViewMore,
             child: Text(
               viewMoreText,
-              style: viewMoreStyle,
+              style: TextStyles.secondTitle(),
             ),
           ),
         ],

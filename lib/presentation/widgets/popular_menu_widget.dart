@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/domain/models/menu_item.dart';
+import 'package:food_app/styles/text_styles.dart';
 
 class PopularMenu extends StatelessWidget {
   final List<MenuItem> meals;
@@ -58,15 +59,12 @@ class MenuCard extends StatelessWidget {
                 children: [
                   Text(
                     meal.name,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
+                    style: TextStyles.cardTitle(),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     meal.restaurantName,
-                    style: TextStyle(color: Colors.grey[600]),
+                    style: TextStyles.cardSecondTitle(),
                   ),
                 ],
               ),
@@ -78,11 +76,7 @@ class MenuCard extends StatelessWidget {
                   padding: const EdgeInsets.all(8),
                   child: Text(
                     meal.price,
-                    style: const TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.orange,
-                    ),
+                    style: TextStyles.priceText(),
                   ),
                 ),
               ],
