@@ -78,3 +78,31 @@ class RestaurantListContent extends StatelessWidget {
     );
   }
 }
+
+class RestaurantGridContent extends StatelessWidget {
+  final List<Restaurant> restaurants;
+
+  const RestaurantGridContent({super.key, required this.restaurants});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: GridView.builder(
+        shrinkWrap: true, 
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 10.0,
+          mainAxisSpacing: 10.0,
+          childAspectRatio: 3 / 4, 
+        ),
+        itemCount: restaurants.length,
+        itemBuilder: (context, index) {
+          final restaurant = restaurants[index];
+          return RestaurantCard(restaurant: restaurant);
+        },
+      ),
+    );
+  }
+}
