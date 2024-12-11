@@ -4,6 +4,7 @@ abstract class SearchState extends Equatable {
   @override
   List<Object> get props => [];
 }
+class InitialState extends SearchState {}
 
 class LoadingState extends SearchState {}
 
