@@ -14,7 +14,6 @@ class FilterScreen extends StatefulWidget {
   const FilterScreen({super.key, required this.searchBloc});
 
   @override
-  // ignore: library_private_types_in_public_api
   _FiltersScreenState createState() => _FiltersScreenState();
 }
 
@@ -221,36 +220,37 @@ class _FiltersScreenState extends State<FilterScreen> {
                   ),
                 ),
               ),
-              Expanded(
-                child: BlocListener<SearchBloc, SearchState>(
-                  listener: (context, state) {
-                    if (state is LoadedState) {
-                      WidgetsBinding.instance.addPostFrameCallback((_) {
-                        Navigator.pushNamed(
-                          context,
-                          Strings.resultScreen,
-                          arguments: {
-                            'type': state.type,
-                            'restaurants': state.restaurants,
-                          },
-                        );
-                      });
-                    } else if (state is ErrorState) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text(state.message)),
+              BlocListener<SearchBloc, SearchState>(
+                listener: (context, state) {
+                  if (state is LoadedState) {
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      Navigator.pushNamed(
+                        context,
+                        Strings.resultScreen,
+                        arguments: {
+                          'type': state.type,
+                          'restaurants': state.restaurants,
+                        },
                       );
-                    }
-                  },
-                  child: Center(
-                    child: BlocBuilder<SearchBloc, SearchState>(
-                      builder: (context, state) {
-                        if (state is LoadingState) {
-                          return const CircularProgressIndicator();
-                        } else {
-                          return const SizedBox();
-                        }
-                      },
-                    ),
+                    });
+                  } else if (state is ErrorState) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(state.message)),
+                    );
+                  }
+                },
+                child: Center(
+                  child: BlocBuilder<SearchBloc, SearchState>(
+                    builder: (context, state) {
+                      if(state is InitialState){
+                        return const SizedBox();
+                      }
+                      if (state is LoadingState) {
+                        return const CircularProgressIndicator();
+                      } else {
+                        return const SizedBox();
+                      }
+                    },
                   ),
                 ),
               ),
