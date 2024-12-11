@@ -7,7 +7,7 @@ import 'package:food_app/presentation/screens/search/search_presenter.dart';
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
   final RestaurantPresenter presenter;
 
-  SearchBloc(this.presenter) : super(LoadingState()) {
+  SearchBloc(this.presenter) : super(InitialState()) {
     on<SearchEvent>(_onSearch);
   }
 
