@@ -42,7 +42,6 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       body: _screens[_currentIndex],
       extendBody: true,
-      backgroundColor: Colors.yellow,
       bottomNavigationBar: Container(
         margin: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
         decoration: BoxDecoration(

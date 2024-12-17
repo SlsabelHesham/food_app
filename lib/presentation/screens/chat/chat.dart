@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/styles/text_styles.dart';
 
 class Chat extends StatelessWidget {
   
@@ -7,6 +8,6 @@ class Chat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text("Chat");
+    return Center(child: Text("Chat", style: TextStyles.headerHeadline(context)));
   }
 }

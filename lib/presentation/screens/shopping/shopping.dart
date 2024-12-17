@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/styles/text_styles.dart';
 
 class Shopping extends StatelessWidget {
   
@@ -7,6 +8,6 @@ class Shopping extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text("Shopping");
+    return Center(child: Text("Shopping", style: TextStyles.headerHeadline(context)));
   }
 }
