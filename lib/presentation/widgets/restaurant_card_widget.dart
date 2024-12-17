@@ -27,12 +27,12 @@ class RestaurantCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
-            padding: const EdgeInsets.only(right: 21, left: 21, top: 26),
+            padding: const EdgeInsets.only(right: 16, left: 16, top: 16),
             child: Image.network(
               restaurant.imageUrl,
-              height: 73,
-              width: 96,
-              fit: BoxFit.cover,
+              height: 90,
+              width: 100,
+              fit: BoxFit.contain,
             ),
           ),
           Padding(
