@@ -25,6 +25,7 @@ class FiltersScreenState extends State<FilterScreen> {
   String selectedLocation = "";
   List<String> selectedFoods = [];
   bool hasNavigated = false;
+  bool isSearchButttonDisabled = false;
 
   void _toggleFilterChip(String label, List<String> filterList) {
     setState(() {
@@ -195,16 +196,25 @@ class FiltersScreenState extends State<FilterScreen> {
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: TextButton(
-                  onPressed: () {
-                    widget.searchBloc.add(SearchEvent(
-                      mealName: _searchController.text.trim(),
-                      selectedType: selectedType,
-                      selectedLocation: selectedLocation,
-                      selectedFoods: selectedFoods,
-                    ));
-                  },
+                  onPressed: isSearchButttonDisabled
+                      ? null
+                      : () {
+                          setState(() {
+                            isSearchButttonDisabled = true;
+                          });
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            widget.searchBloc.add(SearchEvent(
+                              mealName: _searchController.text.trim(),
+                              selectedType: selectedType,
+                              selectedLocation: selectedLocation,
+                              selectedFoods: selectedFoods,
+                            ));
+                          });
+                        },
                   style: TextButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 56, 214, 130),
+                    backgroundColor: isSearchButttonDisabled
+                        ? Colors.grey
+                        : const Color.fromARGB(255, 56, 214, 130),
                     minimumSize: const Size(double.infinity, 57),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
@@ -219,7 +229,6 @@ class FiltersScreenState extends State<FilterScreen> {
               BlocListener<SearchBloc, SearchState>(
                 listener: (context, state) {
                   if (hasNavigated) return;
-
                   if (state is LoadedState) {
                     hasNavigated = true;
                     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -236,14 +245,16 @@ class FiltersScreenState extends State<FilterScreen> {
                         },
                       ).then((_) {
                         hasNavigated = false;
-                        }
-                      );
+                      });
                     });
                   } else if (state is ErrorState) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text(state.message)),
                     );
                   }
+                  setState(() {
+                    isSearchButttonDisabled = false;
+                  });
                 },
                 child: Center(
                   child: BlocBuilder<SearchBloc, SearchState>(
