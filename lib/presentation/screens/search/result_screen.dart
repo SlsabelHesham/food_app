@@ -39,7 +39,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
     value = widget.data['restaurants'];
     foods = List<String>.from(widget.data['foods'] ?? []);
     location = widget.data['location'] ?? "";
-    mealName = value.isNotEmpty ? value[0]['meal_name'] ?? "" : "";
+    mealName = widget.data['meal_name'];
     searchBloc = widget.data['search_block'];
 
     selectedFilters = [];
@@ -48,11 +48,10 @@ class _ResultsScreenState extends State<ResultsScreen> {
   }
 
   void handleItemDeleted(int index) {
-    setState(() {
-      if (index == 0) {
+      if (index == 0 && location.isNotEmpty) {
         location = "";
       } else {
-        foods.removeAt(index - 1);
+        foods.removeAt(index);
       }
       searchBloc.add(SearchEvent(
         mealName: mealName,
@@ -63,7 +62,6 @@ class _ResultsScreenState extends State<ResultsScreen> {
       selectedFilters = [];
       if (location.isNotEmpty) selectedFilters.add(location);
       selectedFilters.addAll(foods);
-    });
   }
 
   @override

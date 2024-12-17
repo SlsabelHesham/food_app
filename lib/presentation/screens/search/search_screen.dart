@@ -231,7 +231,8 @@ class FiltersScreenState extends State<FilterScreen> {
                           'type': state.type,
                           'restaurants': state.restaurants,
                           'foods': selectedFoods,
-                          'location': selectedLocation
+                          'location': selectedLocation,
+                          'meal_name': _searchController.text.toString().trim(),
                         },
                       ).then((_) {
                         hasNavigated = false;
