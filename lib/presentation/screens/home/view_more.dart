@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/core/resources/strings.dart';
 import 'package:food_app/domain/models/menu_item.dart';
 import 'package:food_app/domain/models/restaurants.dart';
 import 'package:food_app/presentation/widgets/header_widget.dart';
@@ -80,8 +81,8 @@ class ViewMoreScreen extends StatelessWidget {
 
   Widget _buildHeader() {
     return const HeaderWidget(
-      headerText: "Find Your \nFavorite Food",
-      imageAsset: "assets/images/pattern.png",
+      headerText: Strings.headerText,
+      imageAsset: Strings.headerImage,
     );
   }
 }

@@ -35,13 +35,13 @@ class Home extends StatelessWidget {
                     _buildHeader(),
                     _buildSearchBar(context),
                     _buildBanner(),
-                    _buildSectionTitle(context, "Nearest Restaurant",
+                    _buildSectionTitle(context, Strings.nearestRestaurant,
                         "Restaurant", state.nearestRestaurants),
                     _buildRestaurantListContent(state.nearestRestaurants),
                     _buildSectionTitle(
-                        context, "Popular Menu", "Meals", state.popularMenu),
+                        context, Strings.popularMenu, "Meals", state.popularMenu),
                     _buildPopularMenu(state.popularMenu),
-                    _buildSectionTitle(context, "Popular Restaurant",
+                    _buildSectionTitle(context, Strings.popularRestaurant,
                         "Restaurant", state.nearestRestaurants),
                     _buildRestaurantListContent(state.popularRestaurants),
                     const Padding(padding: EdgeInsets.only(bottom: 20))
@@ -59,11 +59,11 @@ class Home extends StatelessWidget {
 }
 
 Widget _buildHeader() {
-  return const HeaderWidget(
-    headerText: "Find Your \nFavorite Food",
-    imageAsset: "assets/images/pattern.png",
-  );
-}
+    return const HeaderWidget(
+      headerText: Strings.headerText,
+      imageAsset: Strings.headerImage,
+    );
+  }
 
 Widget _buildSearchBar(BuildContext context) {
   return SearchBarWidget(
@@ -75,7 +75,7 @@ Widget _buildSearchBar(BuildContext context) {
 
 Widget _buildBanner() {
   return const BannerWidget(
-    imageAsset: "assets/images/promo_advertising.png",
+    imageAsset: Strings.bannerImage,
   );
 }
 

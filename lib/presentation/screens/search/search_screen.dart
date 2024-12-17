@@ -59,7 +59,7 @@ class FiltersScreenState extends State<FilterScreen> {
                             _buildSearchEditText(context),
                             const SizedBox(height: 20),
                             Text(
-                              "Type",
+                              Strings.typeTitle,
                               style: TextStyles.mainTitle(),
                             ),
                             const SizedBox(height: 10),
@@ -67,20 +67,21 @@ class FiltersScreenState extends State<FilterScreen> {
                               spacing: 10,
                               children: [
                                 GenericChoiceChip(
-                                  label: "Restaurant",
-                                  isSelected: selectedType == "Restaurant",
+                                  label: Strings.restaurant,
+                                  isSelected:
+                                      selectedType == Strings.restaurant,
                                   onTap: () {
                                     setState(() {
-                                      selectedType = "Restaurant";
+                                      selectedType = Strings.restaurant;
                                     });
                                   },
                                 ),
                                 GenericChoiceChip(
-                                  label: "Menu",
-                                  isSelected: selectedType == "Menu",
+                                  label: Strings.menu,
+                                  isSelected: selectedType == Strings.menu,
                                   onTap: () {
                                     setState(() {
-                                      selectedType = "Menu";
+                                      selectedType = Strings.menu;
                                     });
                                   },
                                 ),
@@ -88,7 +89,7 @@ class FiltersScreenState extends State<FilterScreen> {
                             ),
                             const SizedBox(height: 20),
                             Text(
-                              "Location",
+                              Strings.locationTitle,
                               style: TextStyles.mainTitle(),
                             ),
                             const SizedBox(height: 10),
@@ -96,29 +97,31 @@ class FiltersScreenState extends State<FilterScreen> {
                               spacing: 10,
                               children: [
                                 GenericChoiceChip(
-                                  label: "1 Km",
-                                  isSelected: selectedLocation == "1 Km",
+                                  label: Strings.oneKm,
+                                  isSelected: selectedLocation == Strings.oneKm,
                                   onTap: () {
                                     setState(() {
-                                      selectedLocation = "1 Km";
+                                      selectedLocation = Strings.oneKm;
                                     });
                                   },
                                 ),
                                 GenericChoiceChip(
-                                  label: ">10 Km",
-                                  isSelected: selectedLocation == ">10 Km",
+                                  label: Strings.moreThanTenKm,
+                                  isSelected:
+                                      selectedLocation == Strings.moreThanTenKm,
                                   onTap: () {
                                     setState(() {
-                                      selectedLocation = ">10 Km";
+                                      selectedLocation = Strings.moreThanTenKm;
                                     });
                                   },
                                 ),
                                 GenericChoiceChip(
-                                  label: "<10 Km",
-                                  isSelected: selectedLocation == "<10 Km",
+                                  label: Strings.lessThanTenKm,
+                                  isSelected:
+                                      selectedLocation == Strings.lessThanTenKm,
                                   onTap: () {
                                     setState(() {
-                                      selectedLocation = "<10 Km";
+                                      selectedLocation = Strings.lessThanTenKm;
                                     });
                                   },
                                 ),
@@ -126,7 +129,7 @@ class FiltersScreenState extends State<FilterScreen> {
                             ),
                             const SizedBox(height: 20),
                             Text(
-                              "Food",
+                              Strings.food,
                               style: TextStyles.mainTitle(),
                             ),
                             const SizedBox(height: 10),
@@ -135,52 +138,57 @@ class FiltersScreenState extends State<FilterScreen> {
                               runSpacing: 10,
                               children: [
                                 GenericChoiceChip(
-                                  label: "food",
-                                  isSelected: selectedFoods.contains("food"),
-                                  onTap: () {
-                                    setState(() {
-                                      _toggleFilterChip("food", selectedFoods);
-                                    });
-                                  },
-                                ),
-                                GenericChoiceChip(
-                                  label: "soup",
-                                  isSelected: selectedFoods.contains("soup"),
-                                  onTap: () {
-                                    setState(() {
-                                      _toggleFilterChip("soup", selectedFoods);
-                                    });
-                                  },
-                                ),
-                                GenericChoiceChip(
-                                  label: "Main Course",
+                                  label: Strings.foodChip,
                                   isSelected:
-                                      selectedFoods.contains("Main Course"),
+                                      selectedFoods.contains(Strings.foodChip),
                                   onTap: () {
                                     setState(() {
                                       _toggleFilterChip(
-                                          "Main Course", selectedFoods);
+                                          Strings.foodChip, selectedFoods);
                                     });
                                   },
                                 ),
                                 GenericChoiceChip(
-                                  label: "Appetizer",
+                                  label: Strings.soup,
                                   isSelected:
-                                      selectedFoods.contains("Appetizer"),
+                                      selectedFoods.contains(Strings.soup),
                                   onTap: () {
                                     setState(() {
                                       _toggleFilterChip(
-                                          "Appetizer", selectedFoods);
+                                          Strings.soup, selectedFoods);
                                     });
                                   },
                                 ),
                                 GenericChoiceChip(
-                                  label: "Dessert",
-                                  isSelected: selectedFoods.contains("Dessert"),
+                                  label: Strings.mainCourse,
+                                  isSelected: selectedFoods
+                                      .contains(Strings.mainCourse),
                                   onTap: () {
                                     setState(() {
                                       _toggleFilterChip(
-                                          "Dessert", selectedFoods);
+                                          Strings.mainCourse, selectedFoods);
+                                    });
+                                  },
+                                ),
+                                GenericChoiceChip(
+                                  label: Strings.appetizer,
+                                  isSelected:
+                                      selectedFoods.contains(Strings.appetizer),
+                                  onTap: () {
+                                    setState(() {
+                                      _toggleFilterChip(
+                                          Strings.appetizer, selectedFoods);
+                                    });
+                                  },
+                                ),
+                                GenericChoiceChip(
+                                  label: Strings.dessert,
+                                  isSelected:
+                                      selectedFoods.contains(Strings.dessert),
+                                  onTap: () {
+                                    setState(() {
+                                      _toggleFilterChip(
+                                          Strings.dessert, selectedFoods);
                                     });
                                   },
                                 ),
@@ -221,7 +229,7 @@ class FiltersScreenState extends State<FilterScreen> {
                     ),
                   ),
                   child: Text(
-                    "Search",
+                    Strings.search,
                     style: TextStyles.buttonText(),
                   ),
                 ),
@@ -236,12 +244,13 @@ class FiltersScreenState extends State<FilterScreen> {
                         context,
                         Strings.resultScreen,
                         arguments: {
-                          'search_block': widget.searchBloc,
-                          'type': state.type,
-                          'restaurants': state.restaurants,
-                          'foods': selectedFoods,
-                          'location': selectedLocation,
-                          'meal_name': _searchController.text.toString().trim(),
+                          Strings.searchBlock: widget.searchBloc,
+                          Strings.type: state.type,
+                          Strings.restaurants: state.restaurants,
+                          Strings.foods: selectedFoods,
+                          Strings.location: selectedLocation,
+                          Strings.mealName:
+                              _searchController.text.toString().trim(),
                         },
                       ).then((_) {
                         hasNavigated = false;
@@ -283,7 +292,7 @@ class FiltersScreenState extends State<FilterScreen> {
     return SearchEditText(
       enabled: true,
       controller: _searchController,
-      hintText: "What do you want to order?",
+      hintText: Strings.searchHint,
       searchIconAsset: AppTheme.getSearchIconAsset(context),
       hintColor: colorScheme.onPrimaryContainer.withOpacity(0.2),
       fillColor: colorScheme.onPrimaryContainer.withOpacity(0.1),
@@ -294,8 +303,8 @@ class FiltersScreenState extends State<FilterScreen> {
 
   Widget _buildHeader() {
     return const HeaderWidget(
-      headerText: "Find Your \nFavorite Food",
-      imageAsset: "assets/images/pattern.png",
+      headerText: Strings.headerText,
+      imageAsset: Strings.headerImage,
     );
   }
 }

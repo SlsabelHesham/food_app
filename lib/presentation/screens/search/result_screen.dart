@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_app/core/resources/strings.dart';
 import 'package:food_app/domain/bloc/search/search_bloc.dart';
 import 'package:food_app/domain/bloc/search/search_event.dart';
 import 'package:food_app/domain/bloc/search/search_state.dart';
@@ -31,16 +32,15 @@ class _ResultsScreenState extends State<ResultsScreen> {
   late List<dynamic> value;
   late final SearchBloc searchBloc;
 
-
   @override
   void initState() {
     super.initState();
-    type = widget.data['type'];
-    value = widget.data['restaurants'];
-    foods = List<String>.from(widget.data['foods'] ?? []);
-    location = widget.data['location'] ?? "";
-    mealName = widget.data['meal_name'];
-    searchBloc = widget.data['search_block'];
+    type = widget.data[Strings.type];
+    value = widget.data[Strings.restaurants];
+    foods = List<String>.from(widget.data[Strings.foods] ?? []);
+    location = widget.data[Strings.location] ?? "";
+    mealName = widget.data[Strings.mealName];
+    searchBloc = widget.data[Strings.searchBlock];
 
     selectedFilters = [];
     if (location.isNotEmpty) selectedFilters.add(location);
@@ -48,20 +48,20 @@ class _ResultsScreenState extends State<ResultsScreen> {
   }
 
   void handleItemDeleted(int index) {
-      if (index == 0 && location.isNotEmpty) {
-        location = "";
-      } else {
-        foods.removeAt(index);
-      }
-      searchBloc.add(SearchEvent(
-        mealName: mealName,
-        selectedType: type,
-        selectedLocation: location,
-        selectedFoods: foods,
-      ));
-      selectedFilters = [];
-      if (location.isNotEmpty) selectedFilters.add(location);
-      selectedFilters.addAll(foods);
+    if (index == 0 && location.isNotEmpty) {
+      location = "";
+    } else {
+      foods.removeAt(index);
+    }
+    searchBloc.add(SearchEvent(
+      mealName: mealName,
+      selectedType: type,
+      selectedLocation: location,
+      selectedFoods: foods,
+    ));
+    selectedFilters = [];
+    if (location.isNotEmpty) selectedFilters.add(location);
+    selectedFilters.addAll(foods);
   }
 
   @override
@@ -99,7 +99,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                     if (value.isEmpty) {
                       return const Center(
                         child: Text(
-                          "No search result",
+                          Strings.noSearchResult,
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
@@ -111,8 +111,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                             value.map((meal) {
                               return {
                                 'name': meal['meal_name'] ?? "",
-                                'restaurantName':
-                                    meal['restaurant_name'] ?? "",
+                                'restaurantName': meal['restaurant_name'] ?? "",
                                 'image': meal['meal_image'] ?? "",
                                 'price': meal['meal_price'].toString(),
                               };
@@ -163,8 +162,8 @@ class _ResultsScreenState extends State<ResultsScreen> {
 
   Widget _buildHeader() {
     return const HeaderWidget(
-      headerText: "Find Your \nFavorite Food",
-      imageAsset: "assets/images/pattern.png",
+      headerText: Strings.headerText,
+      imageAsset: Strings.headerImage,
     );
   }
 }
