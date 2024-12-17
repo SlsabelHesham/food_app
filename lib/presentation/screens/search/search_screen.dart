@@ -24,6 +24,7 @@ class _FiltersScreenState extends State<FilterScreen> {
   String selectedType = "";
   String selectedLocation = "";
   List<String> selectedFoods = [];
+  bool hasNavigated = false;
 
   void _toggleFilterChip(String label, List<String> filterList) {
     setState(() {
@@ -217,15 +218,24 @@ class _FiltersScreenState extends State<FilterScreen> {
               ),
               BlocListener<SearchBloc, SearchState>(
                 listener: (context, state) {
+                  if (hasNavigated) return;
+
                   if (state is LoadedState) {
+                    hasNavigated = true;
                     WidgetsBinding.instance.addPostFrameCallback((_) {
                       Navigator.pushNamed(
                         context,
                         Strings.resultScreen,
                         arguments: {
+                          'search_block': widget.searchBloc,
                           'type': state.type,
                           'restaurants': state.restaurants,
+                          'foods': selectedFoods,
+                          'location': selectedLocation
                         },
+                      ).then((_) {
+                        hasNavigated = false;
+                        }
                       );
                     });
                   } else if (state is ErrorState) {
