@@ -7,5 +7,6 @@ class Strings {
   static const String mainScreen = "/";
   static const String filterScreen = "filter";
   static const String resultScreen = "results";
+    static const String viewMoreScreen = "viewMore";
   static const String unknownRestaurant = "Unknown Restaurant";
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/core/resources/strings.dart';
 import 'package:food_app/domain/bloc/search/search_bloc.dart';
+import 'package:food_app/presentation/screens/home/view_more.dart';
 import 'package:food_app/presentation/screens/main_screen.dart';
 import 'package:food_app/presentation/screens/search/result_screen.dart';
 import 'package:food_app/presentation/screens/search/search_screen.dart';
@@ -21,6 +22,12 @@ class AppRouter {
         final data = settings.arguments as Map<String, dynamic>;
         return MaterialPageRoute(
           builder: (_) => ResultsScreen(data: data),
+        );
+
+      case Strings.viewMoreScreen:
+        final data = settings.arguments as Map<String, dynamic>;
+        return MaterialPageRoute(
+          builder: (_) => ViewMoreScreen(data: data),
         );
     }
     return null;
