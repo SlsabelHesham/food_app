@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/core/resources/strings.dart';
 import 'package:food_app/domain/models/menu_item.dart';
 import 'package:food_app/domain/models/restaurants.dart';
 import 'package:food_app/presentation/screens/home/home_presenter.dart';
@@ -34,17 +35,21 @@ class Home extends StatelessWidget {
                     _buildHeader(),
                     _buildSearchBar(context),
                     _buildBanner(),
-                    _buildSectionTitle("Nearest Restaurant"),
+                    _buildSectionTitle(context, "Nearest Restaurant",
+                        "Restaurant", state.nearestRestaurants),
                     _buildRestaurantListContent(state.nearestRestaurants),
-                    _buildSectionTitle("Popular Menu"),
+                    _buildSectionTitle(
+                        context, "Popular Menu", "Meals", state.popularMenu),
                     _buildPopularMenu(state.popularMenu),
-                    _buildSectionTitle("Popular Restaurant"),
+                    _buildSectionTitle(context, "Popular Restaurant",
+                        "Restaurant", state.nearestRestaurants),
                     _buildRestaurantListContent(state.popularRestaurants),
+                    const Padding(padding: EdgeInsets.only(bottom: 20))
                   ],
                 ),
               );
             } else {
-              return const Center(child: Text("Error loading data."));
+              return const Center(child: Text(""));
             }
           },
         ),
@@ -61,11 +66,10 @@ Widget _buildHeader() {
 }
 
 Widget _buildSearchBar(BuildContext context) {
- return SearchBarWidget(
+  return SearchBarWidget(
     context: context,
     searchHintText: "",
     filterImageAsset: AppTheme.getFilterIconAsset(context),
-
   );
 }
 
@@ -75,10 +79,16 @@ Widget _buildBanner() {
   );
 }
 
-Widget _buildSectionTitle(String title) {
+Widget _buildSectionTitle(BuildContext context, String title, String type,
+    List<Map<String, dynamic>> list) {
   return SectionTitle(
-    title: title, 
+    title: title,
     onViewMore: () {
+      Navigator.pushNamed(
+        context,
+        Strings.viewMoreScreen,
+        arguments: {'type': type, 'items': list},
+      );
     },
   );
 }
@@ -95,7 +105,7 @@ Widget _buildRestaurantListContent(List<Map<String, dynamic>> restaurants) {
 }
 
 Widget _buildPopularMenu(List<Map<String, dynamic>> meals) {
-  List<MenuItem> menuItems = meals.map((meal) {
+  List<MenuItem> menuItems = meals.take(2).map((meal) {
     return MenuItem(
       name: meal['name'] ?? 'Unknown',
       restaurantName: meal['restaurantName'] ?? 'Unknown',
