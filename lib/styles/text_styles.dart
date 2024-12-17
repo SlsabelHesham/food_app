@@ -31,6 +31,16 @@ class TextStyles {
         color: colorScheme.primaryContainer);
   }
 
+  static TextStyle filterTitle(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    return TextStyle(
+        fontFamily: 'BentonSans',
+        fontWeight: FontWeight.w400,
+        fontSize: 12,
+        height: 15.72 / 12,
+        color: colorScheme.onPrimaryContainer);
+  }
+
   static TextStyle cardTitle() {
     return const TextStyle(
       fontFamily: 'BentonSans',

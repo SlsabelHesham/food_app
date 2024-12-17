@@ -11,7 +11,7 @@ class AppTheme {
       onSecondary: Color(0xff000000),
       error: Color(0xFFBA1A1A),
       onError: Color(0xffFF4545),
-      surface: Color(0xFFFEFEFF),
+      surface: Color(0xFFF5F6FE),
       onSurface: Color(0xFF191C20),
       onPrimaryContainer: Color(0xffDA6317),
       primaryContainer: Color(0xffDA6317),
@@ -25,6 +25,9 @@ class AppTheme {
       backgroundColor: Color(0xff15BE77),
       iconTheme: IconThemeData(color: Color(0xffFFFFFF)),
     ),
+    chipTheme: const ChipThemeData(
+      side: BorderSide.none,
+    )
   );
 
   static ThemeData darkTheme = ThemeData(
@@ -50,6 +53,9 @@ class AppTheme {
       backgroundColor: Color(0xff15BE77),
       iconTheme: IconThemeData(color: Color(0xffFFFFFF)),
     ),
+    chipTheme: const ChipThemeData(
+      side: BorderSide.none,
+    )
   );
 
   static String getSearchIconAsset(BuildContext context) {
