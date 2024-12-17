@@ -16,10 +16,10 @@ class FilterScreen extends StatefulWidget {
   const FilterScreen({super.key, required this.searchBloc});
 
   @override
-  _FiltersScreenState createState() => _FiltersScreenState();
+  FiltersScreenState createState() => FiltersScreenState();
 }
 
-class _FiltersScreenState extends State<FilterScreen> {
+class FiltersScreenState extends State<FilterScreen> {
   final TextEditingController _searchController = TextEditingController();
   String selectedType = "";
   String selectedLocation = "";

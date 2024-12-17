@@ -1,11 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/core/navigation/app_router.dart';
 import 'package:food_app/core/resources/strings.dart';
+import 'package:food_app/data/datasources/remote_datasource/restaurant_datasource_impl.dart';
+import 'package:food_app/data/repositories/restaurant_repository_impl.dart';
 import 'package:food_app/domain/bloc/home/home_bloc.dart';
-import 'package:food_app/data/datasources/restaurant_datasource.dart';
-import 'package:food_app/data/repositories/restaurant_repository.dart';
 import 'package:food_app/domain/bloc/search/search_bloc.dart';
 import 'package:food_app/presentation/screens/search/search_presenter.dart';
 import 'package:food_app/styles/theme.dart';
@@ -25,14 +26,16 @@ void main() async {
       ),
     );
   }
+  final restaurantDataSource = RestaurantDataSourceImpl(FirebaseFirestore.instance);
+  final restaurantRepository = RestaurantRepositoryImpl(restaurantDataSource);
   runApp(
     MultiBlocProvider(
       providers: [
         BlocProvider(
             create: (_) =>
-                HomeBloc(RestaurantRepository(RestaurantDataSource()))),
+                HomeBloc(restaurantRepository)),
         BlocProvider<SearchBloc>(
-          create: (context) => SearchBloc(RestaurantPresenter(RestaurantDataSource())),
+          create: (context) => SearchBloc(RestaurantPresenter(restaurantDataSource)),
         ),
       ],
       child: FoodApp(appRouter: AppRouter()),

@@ -1,5 +1,5 @@
 import 'package:food_app/core/utils/helper.dart';
-import 'package:food_app/data/datasources/restaurant_datasource.dart';
+import 'package:food_app/data/datasources/remote_datasource/restaurant_datasource.dart';
 import 'package:food_app/services/location_service.dart';
 import 'package:location/location.dart';
 
@@ -30,7 +30,7 @@ class RestaurantPresenter {
     for (final restaurant in restaurants) {
       if (mealName.isNotEmpty) {
         for (final meal in restaurant?['meals']) {
-          if (meal['name'] == mealName) {
+          if (meal['name'].toString().toLowerCase().trim().contains(mealName.toLowerCase().trim())) {
             filteredMeals.add({
               ...meal,
               'restaurant_name': restaurant?['name'],
