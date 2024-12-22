@@ -16,12 +16,10 @@ import 'package:food_app/presentation/screens/search/search_screen.dart';
 class AppRouter {
   late RestaurantDataSource restaurantDataSource;
   late RestaurantRepository restaurantRepository;
-  late HomeBloc homeBloc;
 
   AppRouter() {
     restaurantDataSource = RestaurantDataSourceImpl(FirebaseFirestore.instance);
     restaurantRepository = RestaurantRepositoryImpl(restaurantDataSource);
-    homeBloc = HomeBloc(restaurantRepository);
   }
   Route? generateRoute(RouteSettings settings) {
     switch (settings.name) {
