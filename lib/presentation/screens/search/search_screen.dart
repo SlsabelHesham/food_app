@@ -23,7 +23,6 @@ class FiltersScreenState extends State<FilterScreen> {
   String selectedType = "";
   String selectedLocation = "";
   List<String> selectedFoods = [];
-  bool hasNavigated = false;
   bool isSearchButttonDisabled = false;
   late SearchPresenter searchPresenter;
 
@@ -240,15 +239,12 @@ class FiltersScreenState extends State<FilterScreen> {
               ),
               BlocListener<SearchBloc, SearchState>(
                 listener: (context, state) {
-                  if (hasNavigated) return;
                   if (state is SearchLoaded) {
-                    hasNavigated = true;
                     WidgetsBinding.instance.addPostFrameCallback((_) {
                       Navigator.pushNamed(
                         context,
                         Strings.resultScreen,
                         arguments: {
-                          //Strings.searchBlock: widget.searchBloc,
                           Strings.type: state.type,
                           Strings.restaurants: state.restaurants,
                           Strings.foods: selectedFoods,
@@ -256,9 +252,7 @@ class FiltersScreenState extends State<FilterScreen> {
                           Strings.mealName:
                               _searchController.text.toString().trim(),
                         },
-                      ).then((_) {
-                        hasNavigated = false;
-                      });
+                      );
                     });
                   } else if (state is SearchError) {
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -273,12 +267,12 @@ class FiltersScreenState extends State<FilterScreen> {
                   child: BlocBuilder<SearchBloc, SearchState>(
                     builder: (context, state) {
                       if (state is SearchInitial) {
-                        return const SizedBox();
+                        return const SizedBox.shrink();
                       }
                       if (state is SearchLoading) {
                         return const CircularProgressIndicator();
                       } else {
-                        return const SizedBox();
+                        return const SizedBox.shrink();
                       }
                     },
                   ),
