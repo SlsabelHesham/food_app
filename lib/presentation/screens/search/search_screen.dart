@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/core/resources/strings.dart';
 import 'package:food_app/domain/bloc/search/search_bloc.dart';
-import 'package:food_app/domain/bloc/search/search_event.dart';
 import 'package:food_app/domain/bloc/search/search_state.dart';
+import 'package:food_app/presentation/screens/search/search_presenter.dart';
 import 'package:food_app/presentation/widgets/header_widget.dart';
 import 'package:food_app/presentation/widgets/search_edit_text_widget.dart';
 import 'package:food_app/presentation/widgets/choise_chip.dart';
@@ -11,9 +11,8 @@ import 'package:food_app/styles/text_styles.dart';
 import 'package:food_app/styles/theme.dart';
 
 class FilterScreen extends StatefulWidget {
-  final SearchBloc searchBloc;
 
-  const FilterScreen({super.key, required this.searchBloc});
+  const FilterScreen({super.key});
 
   @override
   FiltersScreenState createState() => FiltersScreenState();
@@ -26,6 +25,7 @@ class FiltersScreenState extends State<FilterScreen> {
   List<String> selectedFoods = [];
   bool hasNavigated = false;
   bool isSearchButttonDisabled = false;
+  late SearchPresenter searchPresenter;
 
   void _toggleFilterChip(String label, List<String> filterList) {
     setState(() {
@@ -36,12 +36,16 @@ class FiltersScreenState extends State<FilterScreen> {
       }
     });
   }
+  @override
+  void initState() {
+    super.initState();
+    searchPresenter =
+        SearchPresenter(BlocProvider.of<SearchBloc>(context));
+  }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => widget.searchBloc,
-      child: Scaffold(
+    return Scaffold(
         resizeToAvoidBottomInset: true,
         body: SafeArea(
           child: Column(
@@ -211,12 +215,12 @@ class FiltersScreenState extends State<FilterScreen> {
                             isSearchButttonDisabled = true;
                           });
                           WidgetsBinding.instance.addPostFrameCallback((_) {
-                            widget.searchBloc.add(SearchEvent(
-                              mealName: _searchController.text.trim(),
-                              selectedType: selectedType,
-                              selectedLocation: selectedLocation,
-                              selectedFoods: selectedFoods,
-                            ));
+                              searchPresenter.search(
+                              _searchController.text.trim(),
+                              selectedType,
+                              selectedLocation,
+                              selectedFoods,
+                            );
                           });
                         },
                   style: TextButton.styleFrom(
@@ -237,14 +241,14 @@ class FiltersScreenState extends State<FilterScreen> {
               BlocListener<SearchBloc, SearchState>(
                 listener: (context, state) {
                   if (hasNavigated) return;
-                  if (state is LoadedState) {
+                  if (state is SearchLoaded) {
                     hasNavigated = true;
                     WidgetsBinding.instance.addPostFrameCallback((_) {
                       Navigator.pushNamed(
                         context,
                         Strings.resultScreen,
                         arguments: {
-                          Strings.searchBlock: widget.searchBloc,
+                          //Strings.searchBlock: widget.searchBloc,
                           Strings.type: state.type,
                           Strings.restaurants: state.restaurants,
                           Strings.foods: selectedFoods,
@@ -256,7 +260,7 @@ class FiltersScreenState extends State<FilterScreen> {
                         hasNavigated = false;
                       });
                     });
-                  } else if (state is ErrorState) {
+                  } else if (state is SearchError) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text(state.message)),
                     );
@@ -268,10 +272,10 @@ class FiltersScreenState extends State<FilterScreen> {
                 child: Center(
                   child: BlocBuilder<SearchBloc, SearchState>(
                     builder: (context, state) {
-                      if (state is InitialState) {
+                      if (state is SearchInitial) {
                         return const SizedBox();
                       }
-                      if (state is LoadingState) {
+                      if (state is SearchLoading) {
                         return const CircularProgressIndicator();
                       } else {
                         return const SizedBox();
@@ -283,8 +287,7 @@ class FiltersScreenState extends State<FilterScreen> {
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 
   Widget _buildSearchEditText(BuildContext context) {

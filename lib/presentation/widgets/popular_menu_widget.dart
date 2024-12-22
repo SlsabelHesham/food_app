@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/core/resources/strings.dart';
 import 'package:food_app/domain/models/menu_item.dart';
 import 'package:food_app/styles/text_styles.dart';
 
@@ -45,8 +46,9 @@ class MenuCard extends StatelessWidget {
             if (meal.imageUrl.isNotEmpty)
               ClipRRect(
                 borderRadius: BorderRadius.circular(15),
-                child: Image.network(
-                  meal.imageUrl,
+                child: FadeInImage.assetNetwork(
+                  placeholder: Strings.loadingImage,
+                  image: meal.imageUrl,
                   height: 64,
                   width: 64,
                   fit: BoxFit.contain,

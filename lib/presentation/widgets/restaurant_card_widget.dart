@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/core/resources/strings.dart';
 import 'package:food_app/domain/models/restaurants.dart';
 import 'package:food_app/styles/text_styles.dart';
 
@@ -28,8 +29,9 @@ class RestaurantCard extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.only(right: 16, left: 16, top: 16),
-            child: Image.network(
-              restaurant.imageUrl,
+            child: FadeInImage.assetNetwork(
+              placeholder: Strings.loadingImage,
+              image: restaurant.imageUrl,
               height: 90,
               width: 100,
               fit: BoxFit.contain,
@@ -65,7 +67,7 @@ class RestaurantListContent extends StatelessWidget {
     return SizedBox(
       height: 184,
       child: Padding(
-        padding: const EdgeInsets.only(right: 25, left: 25),
+        padding: const EdgeInsets.only(left: 25),
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: restaurants.length,

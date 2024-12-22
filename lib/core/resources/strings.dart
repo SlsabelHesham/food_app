@@ -38,4 +38,5 @@ class Strings {
   static const String nearestRestaurant = "Nearest Restaurant";
   static const String popularMenu = "Popular Menu";
   static const String popularRestaurant = "Popular Restaurant";
+  static const String loadingImage = "assets/images/loading.gif";
 }

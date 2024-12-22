@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/core/resources/strings.dart';
-import 'package:food_app/domain/bloc/search/search_bloc.dart';
 import 'package:food_app/presentation/widgets/search_edit_text_widget.dart';
 import 'package:food_app/styles/theme.dart';
 
@@ -69,8 +67,7 @@ class SearchBarWidget extends StatelessWidget {
       onTap: () {
         Navigator.pushNamed(
           context,
-          Strings.filterScreen,
-          arguments: context.read<SearchBloc>(),
+          Strings.filterScreen
         );
       },
     );

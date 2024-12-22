@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/core/resources/strings.dart';
 import 'package:food_app/domain/bloc/search/search_bloc.dart';
-import 'package:food_app/domain/bloc/search/search_event.dart';
 import 'package:food_app/domain/bloc/search/search_state.dart';
 import 'package:food_app/domain/models/menu_item.dart';
 import 'package:food_app/domain/models/restaurants.dart';
+import 'package:food_app/presentation/screens/search/search_presenter.dart';
 import 'package:food_app/presentation/widgets/header_widget.dart';
 import 'package:food_app/presentation/widgets/popular_menu_widget.dart';
 import 'package:food_app/presentation/widgets/restaurant_card_widget.dart';
 import 'package:food_app/presentation/widgets/selected_filters.dart';
+import 'package:food_app/styles/text_styles.dart';
 
 class ResultsScreen extends StatefulWidget {
   final Map<String, dynamic> data;
@@ -31,6 +32,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
   late List<String> selectedFilters;
   late List<dynamic> value;
   late final SearchBloc searchBloc;
+  late SearchPresenter searchPresenter;
 
   @override
   void initState() {
@@ -40,7 +42,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
     foods = List<String>.from(widget.data[Strings.foods] ?? []);
     location = widget.data[Strings.location] ?? "";
     mealName = widget.data[Strings.mealName];
-    searchBloc = widget.data[Strings.searchBlock];
+    searchPresenter = SearchPresenter(BlocProvider.of<SearchBloc>(context));
 
     selectedFilters = [];
     if (location.isNotEmpty) selectedFilters.add(location);
@@ -53,12 +55,12 @@ class _ResultsScreenState extends State<ResultsScreen> {
     } else {
       foods.removeAt(index);
     }
-    searchBloc.add(SearchEvent(
-      mealName: mealName,
-      selectedType: type,
-      selectedLocation: location,
-      selectedFoods: foods,
-    ));
+    searchPresenter.search(
+      mealName,
+      type,
+      location,
+      foods,
+    );
     selectedFilters = [];
     if (location.isNotEmpty) selectedFilters.add(location);
     selectedFilters.addAll(foods);
@@ -72,19 +74,20 @@ class _ResultsScreenState extends State<ResultsScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildHeader(),
+            selectedFilters.isNotEmpty ?
             HorizontalListView(
               items: selectedFilters,
               onItemDeleted: handleItemDeleted,
-            ),
+            ): const SizedBox.shrink(),
             Expanded(
               child: BlocListener<SearchBloc, SearchState>(
                 listener: (context, state) {
-                  if (state is LoadedState) {
+                  if (state is SearchLoaded) {
                     setState(() {
                       type = state.type;
                       value = state.restaurants;
                     });
-                  } else if (state is ErrorState) {
+                  } else if (state is SearchError) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text(state.message)),
                     );
@@ -92,16 +95,15 @@ class _ResultsScreenState extends State<ResultsScreen> {
                 },
                 child: BlocBuilder<SearchBloc, SearchState>(
                   builder: (context, state) {
-                    if (state is LoadingState) {
+                    if (state is SearchLoading) {
                       return const Center(child: CircularProgressIndicator());
                     }
 
                     if (value.isEmpty) {
-                      return const Center(
+                      return Center(
                         child: Text(
                           Strings.noSearchResult,
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
+                          style: TextStyles.mainTitle(),
                         ),
                       );
                     }

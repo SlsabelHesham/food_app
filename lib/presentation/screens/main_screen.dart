@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/presentation/screens/chat/chat.dart';
 import 'package:food_app/presentation/screens/home/home.dart';
-import 'package:food_app/domain/bloc/home/home_bloc.dart';
-import 'package:food_app/presentation/screens/home/home_presenter.dart';
 import 'package:food_app/presentation/screens/profile/profile.dart';
 import 'package:food_app/presentation/screens/shopping/shopping.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -23,7 +20,7 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     super.initState();
     _screens = [
-      Home(presenter: HomePresenter(context.read<HomeBloc>())),
+      const HomeScreen(),
       const Profile(),
       const Shopping(),
       const Chat(),

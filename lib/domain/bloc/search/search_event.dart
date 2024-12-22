@@ -1,24 +1,10 @@
-import 'package:equatable/equatable.dart';
+abstract class SearchEvent {}
 
-abstract class SearchEventClass extends Equatable {
-  @override
-  List<Object> get props => [];
-}
-
-class SearchEvent extends SearchEventClass {
+class Search extends SearchEvent {
   final String mealName;
   final String selectedType;
   final String selectedLocation;
   final List<String> selectedFoods;
-
-  SearchEvent({
-    required this.mealName,
-    required this.selectedType,
-    required this.selectedLocation,
-    required this.selectedFoods,
-  });
-
-  @override
-  List<Object> get props =>
-      [mealName, selectedType, selectedLocation, selectedFoods];
+  
+  Search(this.mealName, this.selectedType, this.selectedLocation, this.selectedFoods);
 }
