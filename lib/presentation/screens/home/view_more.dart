@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/core/resources/strings.dart';
-import 'package:food_app/domain/models/menu_item.dart';
-import 'package:food_app/domain/models/restaurants.dart';
+import 'package:food_app/domain/models/filtered_meal.dart';
+import 'package:food_app/domain/models/restaurant.dart';
 import 'package:food_app/presentation/widgets/header_widget.dart';
 import 'package:food_app/presentation/widgets/popular_menu_widget.dart';
 import 'package:food_app/presentation/widgets/restaurant_card_widget.dart';
@@ -30,23 +30,10 @@ class ViewMoreScreen extends StatelessWidget {
                   ? const Center(child: Text("No items available"))
                   : type == "Meals"
                       ? _buildPopularMenu(
-                          value.map((meal) {
-                            return {
-                              'name': meal['name'] ?? "",
-                              'restaurantName': meal['restaurantName'] ?? "",
-                              'image': meal['image'] ?? "",
-                              'price': meal['price'].toString(),
-                            };
-                          }).toList(),
+                          value as List<FilteredMeal>,
                         )
                       : _buildRestaurantListContent(
-                          value.map((restaurant) {
-                            return {
-                              'name': restaurant['name'] ?? "",
-                              'time': restaurant['time'] ?? "",
-                              'image': restaurant['image'] ?? "",
-                            };
-                          }).toList(),
+                          value as List<Restaurant>,
                         ),
             ),
           ],
@@ -55,28 +42,12 @@ class ViewMoreScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildRestaurantListContent(List<Map<String, dynamic>> restaurants) {
-    List<Restaurant> restaurantItems = restaurants.map((restaurant) {
-      return Restaurant(
-        name: restaurant['name'] ?? 'Unknown',
-        time: restaurant['time'] ?? 'Unknown',
-        imageUrl: restaurant['image'] ?? '',
-      );
-    }).toList();
-    return RestaurantGridContent(restaurants: restaurantItems);
+  Widget _buildRestaurantListContent(List<Restaurant> restaurants) {
+    return RestaurantGridContent(restaurants: restaurants);
   }
 
-  Widget _buildPopularMenu(List<Map<String, dynamic>> meals) {
-    List<MenuItem> menuItems = meals.map((meal) {
-      return MenuItem(
-        name: meal['name'] ?? 'Unknown',
-        restaurantName: meal['restaurantName'] ?? 'Unknown',
-        imageUrl: meal['image'] ?? '',
-        price: meal['price'] ?? '0.00',
-      );
-    }).toList();
-
-    return PopularMenu(meals: menuItems);
+  Widget _buildPopularMenu(List<FilteredMeal> meals) {
+    return PopularMenu(meals: meals);
   }
 
   Widget _buildHeader() {

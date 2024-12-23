@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/core/resources/strings.dart';
-import 'package:food_app/domain/models/restaurants.dart';
+import 'package:food_app/domain/models/restaurant.dart';
 import 'package:food_app/styles/text_styles.dart';
 
 class RestaurantCard extends StatelessWidget {
@@ -31,7 +31,7 @@ class RestaurantCard extends StatelessWidget {
             padding: const EdgeInsets.only(right: 16, left: 16, top: 16),
             child: FadeInImage.assetNetwork(
               placeholder: Strings.loadingImage,
-              image: restaurant.imageUrl,
+              image: restaurant.image,
               height: 90,
               width: 100,
               fit: BoxFit.contain,

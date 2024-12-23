@@ -13,14 +13,12 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   Future<void> _onSearch(Search event, Emitter<SearchState> emit) async {
     emit(SearchLoading());
     try {
-
       final (type, restaurants) = await repository.searchAndFilter(
         event.mealName,
         event.selectedType,
         event.selectedLocation,
         event.selectedFoods,
       );
-      
       emit(SearchLoaded(type: type, restaurants: restaurants));
     } catch (e) {
       emit(SearchError(e.toString()));
