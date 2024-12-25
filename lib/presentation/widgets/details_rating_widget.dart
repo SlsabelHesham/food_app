@@ -15,7 +15,7 @@ class DetailRatingWidget extends StatelessWidget {
     return Row(
       children: [
         RatingBar(
-          initialRating: restaurantRating / 100,
+          initialRating: restaurantRating / 5 ,
           minRating: 0,
           itemSize: 20.0,
           itemCount: 1,

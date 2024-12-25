@@ -24,8 +24,8 @@ class DetailContent extends StatelessWidget {
       decoration: BoxDecoration(
         color: colorScheme.surface,
         borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(48),
-          topRight: Radius.circular(48),
+          topLeft: Radius.circular(36),
+          topRight: Radius.circular(36),
         ),
         boxShadow: [
           BoxShadow(
@@ -60,6 +60,7 @@ class DetailContent extends StatelessWidget {
                 },
               ),
               DetailMealsList(meals: restaurant.meals),
+              const SizedBox(height: 500,)
             ],
           ),
         ),
