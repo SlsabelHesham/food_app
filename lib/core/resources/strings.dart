@@ -9,6 +9,9 @@ class Strings {
   static const String filterScreen = "filter";
   static const String resultScreen = "results";
   static const String viewMoreScreen = "viewMore";
+    static const String mapScreen = "map";
+
+  static const String restaurantDetailsScreen = "restaurant_details";
   static const String unknownRestaurant = "Unknown Restaurant";
   static const String searchBlock = "search_block";
   static const String type = "type";
@@ -18,6 +21,11 @@ class Strings {
   static const String mealName = "meal_name";
   static const String headerText = "Find Your \nFavorite Food";
   static const String headerImage = "assets/images/pattern.png";
+    static const String starFullImage = "assets/images/star_full.png";
+  static const String starHalfImage = "assets/images/star_half.png";
+  static const String starBorderImage = "assets/images/star_border.png";
+
+    static const String restaurantImage = "assets/images/res.png";
   static const String bannerImage = "assets/images/promo_advertising.png";
   static const String searchHint = "What do you want to order?";
   static const String typeTitle = "Type";

@@ -50,6 +50,8 @@ class RestaurantDataSourceImpl implements RestaurantDataSource {
                 ),
                 rate: (doc['rate'] as num).toDouble(),
                 time: doc['time'] ?? '- min',
+                logo: doc['logo'] ?? '',
+                description: doc['description'] ?? '',
                 image: doc['image'] ?? '',
                 meals: filteredMeals.map((meal) => Meal.fromMap(meal)).toList(),
               );

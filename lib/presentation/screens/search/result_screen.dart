@@ -145,6 +145,8 @@ class _ResultsScreenState extends State<ResultsScreen> {
         location: meal.location,
         rate: meal.restaurantRate,
         time: meal.restaurantTime,
+        logo: meal.restaurantLogo,
+        description: meal.restaurantDescription,
         image: meal.restaurantImage,
         meals: [
           Meal(
@@ -163,7 +165,16 @@ class _ResultsScreenState extends State<ResultsScreen> {
   }
 
   Widget _buildRestaurantListContent(List<Restaurant> restaurants) {
-    return RestaurantGridContent(restaurants: restaurants);
+    return RestaurantGridContent(
+      restaurants: restaurants,
+      onRestaurantTap: (Restaurant selectedRestaurant) {
+        Navigator.pushNamed(
+          context,
+          Strings.restaurantDetailsScreen,
+          arguments: selectedRestaurant,
+        );
+      },
+    );
   }
 
   Widget _buildPopularMenu(List<FilteredMeal> meals) {

@@ -7,6 +7,9 @@ class Restaurant {
   final double rate;
   final String image;
   final String time;
+  final String logo;
+  final String description;
+
   final List<Meal> meals;
 
   Restaurant({
@@ -15,6 +18,8 @@ class Restaurant {
     required this.rate,
     required this.image,
     required this.time,
+    required this.logo,
+    required this.description,
     required this.meals,
   });
 
@@ -25,6 +30,8 @@ class Restaurant {
       rate: (map['rate'] as num).toDouble(),
       image: map['image'] ?? '',
       time: map['time'] ?? '- min',
+      logo: map['logo'] ?? '',
+      description: map['description'] ?? '',
       meals: List<Map<String, dynamic>>.from(map['meals'] ?? [])
           .map((meal) => Meal.fromMap(meal))
           .toList(),

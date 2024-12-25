@@ -79,7 +79,7 @@ class HomeScreenState extends State<HomeScreen> {
             _buildHeader(),
             _buildSearchBar(context),
             _buildBanner(),
-            _buildSectionTitle(context, Strings.nearestRestaurant, "Restaurant",
+            _buildSectionTitle(context, Strings.nearestRestaurant, "Restaurants",
                 nearestRestaurants),
             _buildRestaurantListContent(nearestRestaurants),
             _buildSectionTitle(
@@ -89,7 +89,7 @@ class HomeScreenState extends State<HomeScreen> {
               popularMenu,
             ),
             _buildPopularMenu(popularMenu),
-            _buildSectionTitle(context, Strings.popularRestaurant, "Restaurant",
+            _buildSectionTitle(context, Strings.popularRestaurant, "Restaurants",
                 popularRestaurants),
             _buildRestaurantListContent(popularRestaurants),
             const SizedBox(height: 110)
@@ -115,20 +115,32 @@ class HomeScreenState extends State<HomeScreen> {
 
   Widget _buildSectionTitle(
       BuildContext context, String title, String type, List<dynamic> list) {
-    return SectionTitle(
-      title: title,
-      onViewMore: () {
-        Navigator.pushNamed(
-          context,
-          Strings.viewMoreScreen,
-          arguments: {'type': type, 'items': list},
-        );
-      },
+    return Padding(
+      padding: const EdgeInsets.only(left: 32.0, right: 16.0),
+      child: SectionTitle(
+        title: title,
+        onViewMore: () {
+          Navigator.pushNamed(
+            context,
+            Strings.viewMoreScreen,
+            arguments: {'type': type, 'items': list},
+          );
+        },
+      ),
     );
   }
 
   Widget _buildRestaurantListContent(List<Restaurant> restaurants) {
-    return RestaurantListContent(restaurants: restaurants);
+    return RestaurantListContent(
+      restaurants: restaurants,
+      onRestaurantTap: (Restaurant selectedRestaurant) {
+        Navigator.pushNamed(
+          context,
+          Strings.restaurantDetailsScreen,
+          arguments: selectedRestaurant,
+        );
+      },
+    );
   }
 
   Widget _buildPopularMenu(List<FilteredMeal> meals) {

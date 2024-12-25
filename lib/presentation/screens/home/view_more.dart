@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/core/resources/strings.dart';
 import 'package:food_app/domain/models/filtered_meal.dart';
+import 'package:food_app/domain/models/meal.dart';
 import 'package:food_app/domain/models/restaurant.dart';
 import 'package:food_app/presentation/widgets/header_widget.dart';
 import 'package:food_app/presentation/widgets/popular_menu_widget.dart';
@@ -29,12 +30,11 @@ class ViewMoreScreen extends StatelessWidget {
               child: value.isEmpty
                   ? const Center(child: Text("No items available"))
                   : type == "Meals"
-                      ? _buildPopularMenu(
-                          value as List<FilteredMeal>,
-                        )
-                      : _buildRestaurantListContent(
-                          value as List<Restaurant>,
-                        ),
+                      ? _buildPopularMenu(value as List<FilteredMeal>)
+                      : type == "Restaurants"
+                          ? _buildRestaurantListContent(
+                              value as List<Restaurant>, context)
+                          : _buildMealsListContent(value as List<Meal>),
             ),
           ],
         ),
@@ -42,8 +42,21 @@ class ViewMoreScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildRestaurantListContent(List<Restaurant> restaurants) {
-    return RestaurantGridContent(restaurants: restaurants);
+  Widget _buildRestaurantListContent(List<Restaurant> restaurants, BuildContext context) {
+    return RestaurantGridContent(
+      restaurants: restaurants,
+      onRestaurantTap: (Restaurant selectedRestaurant) {
+        Navigator.pushNamed(
+          context,
+          Strings.restaurantDetailsScreen,
+          arguments: selectedRestaurant,
+        );
+      },
+    );
+  }
+
+  Widget _buildMealsListContent(List<Meal> meals) {
+    return MealGridContent(meals: meals);
   }
 
   Widget _buildPopularMenu(List<FilteredMeal> meals) {

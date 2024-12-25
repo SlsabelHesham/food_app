@@ -6,8 +6,13 @@ import 'package:food_app/data/datasources/remote_datasource/restaurant_datasourc
 import 'package:food_app/data/datasources/remote_datasource/restaurant_datasource_impl.dart';
 import 'package:food_app/data/repositories/restaurant_repository.dart';
 import 'package:food_app/data/repositories/restaurant_repository_impl.dart';
+import 'package:food_app/domain/bloc/details/bloc/details_bloc.dart';
 import 'package:food_app/domain/bloc/home/home_bloc.dart';
 import 'package:food_app/domain/bloc/search/search_bloc.dart';
+import 'package:food_app/domain/models/location.dart';
+import 'package:food_app/domain/models/restaurant.dart';
+import 'package:food_app/presentation/screens/details/map_screen.dart';
+import 'package:food_app/presentation/screens/details/restaurant_details_screen.dart';
 import 'package:food_app/presentation/screens/home/view_more.dart';
 import 'package:food_app/presentation/screens/main_screen.dart';
 import 'package:food_app/presentation/screens/search/result_screen.dart';
@@ -54,6 +59,21 @@ class AppRouter {
         final data = settings.arguments as Map<String, dynamic>;
         return MaterialPageRoute(
           builder: (_) => ViewMoreScreen(data: data),
+        );
+
+      case Strings.restaurantDetailsScreen:
+        final restaurant = settings.arguments as Restaurant;
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (BuildContext context) => DetailScreenBloc(),
+            child: DetailProductScreen(restaurant: restaurant),
+          ),
+        );
+
+      case Strings.mapScreen:
+        final location = settings.arguments as Location;
+        return MaterialPageRoute(
+          builder: (_) => MapScreen(location: location),
         );
     }
     return null;

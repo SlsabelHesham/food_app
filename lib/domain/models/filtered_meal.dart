@@ -7,6 +7,9 @@ class FilteredMeal {
   final double mealRate;
   final String restaurantName;
   final String restaurantTime;
+    final String restaurantLogo;
+  final String restaurantDescription;
+
   final String restaurantImage;
   final double restaurantRate;
   final Location location;
@@ -19,6 +22,9 @@ class FilteredMeal {
     required this.mealRate,
     required this.restaurantName,
     required this.restaurantTime,
+        required this.restaurantLogo,
+    required this.restaurantDescription,
+
     required this.restaurantImage,
     required this.restaurantRate,
     required this.location,
@@ -33,6 +39,9 @@ class FilteredMeal {
       mealRate: (map['mealRate'] as num).toDouble(),
       restaurantName: map['restaurantName'] ?? 'Unknown Restaurant',
       restaurantTime: map['restaurantTime'] ?? '- min',
+            restaurantLogo: map['restaurantLogo'] ?? '',
+      restaurantDescription: map['restaurantDescription'] ?? '',
+
       restaurantImage: map['restaurantImage'] ?? '',
       restaurantRate: (map['restaurantRate'] as num).toDouble(),
       location: Location.fromMap(map['location'] ?? {}),
