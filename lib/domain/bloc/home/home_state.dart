@@ -1,3 +1,6 @@
+import 'package:food_app/domain/models/filtered_meal.dart';
+import 'package:food_app/domain/models/restaurant.dart';
+
 abstract class HomeState {}
 
 class HomeInitial extends HomeState {}
@@ -5,9 +8,9 @@ class HomeInitial extends HomeState {}
 class HomeLoading extends HomeState {}
 
 class HomeLoaded extends HomeState {
-  final List<Map<String, dynamic>> nearestRestaurants;
-  final List<Map<String, dynamic>> popularMenu;
-  final List<Map<String, dynamic>> popularRestaurants;
+  final List<Restaurant> nearestRestaurants;
+  final List<FilteredMeal> popularMenu;
+  final List<Restaurant> popularRestaurants;
 
   HomeLoaded({
     required this.nearestRestaurants,

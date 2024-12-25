@@ -42,7 +42,6 @@ class SearchEditText extends StatelessWidget {
             fillColor: fillColor,
           ),
         ),
-      //),
     );
   }
 }

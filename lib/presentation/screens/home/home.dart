@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/core/resources/strings.dart';
-import 'package:food_app/domain/models/menu_item.dart';
-import 'package:food_app/domain/models/restaurants.dart';
 import 'package:food_app/domain/bloc/home/home_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_app/domain/models/filtered_meal.dart';
+import 'package:food_app/domain/models/restaurant.dart';
 import 'package:food_app/presentation/screens/home/home_presenter.dart';
 import 'package:food_app/presentation/widgets/banner_widget.dart';
 import 'package:food_app/presentation/widgets/header_widget.dart';
@@ -21,9 +21,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenState extends State<HomeScreen> {
-  late List<Map<String, dynamic>> nearestRestaurants;
-  late List<Map<String, dynamic>> popularMenu;
-  late List<Map<String, dynamic>> popularRestaurants;
+  late List<Restaurant> nearestRestaurants;
+  late List<FilteredMeal> popularMenu;
+  late List<Restaurant> popularRestaurants;
   @override
   void initState() {
     super.initState();
@@ -79,14 +79,18 @@ class HomeScreenState extends State<HomeScreen> {
             _buildHeader(),
             _buildSearchBar(context),
             _buildBanner(),
-            _buildSectionTitle(context, Strings.nearestRestaurant, "Restaurant",
+            _buildSectionTitle(context, Strings.nearestRestaurant, "Restaurants",
                 nearestRestaurants),
             _buildRestaurantListContent(nearestRestaurants),
             _buildSectionTitle(
-                context, Strings.popularMenu, "Meals", popularMenu),
+              context,
+              Strings.popularMenu,
+              "Meals",
+              popularMenu,
+            ),
             _buildPopularMenu(popularMenu),
-            _buildSectionTitle(context, Strings.popularRestaurant, "Restaurant",
-                nearestRestaurants),
+            _buildSectionTitle(context, Strings.popularRestaurant, "Restaurants",
+                popularRestaurants),
             _buildRestaurantListContent(popularRestaurants),
             const SizedBox(height: 110)
           ],
@@ -109,41 +113,44 @@ class HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildSectionTitle(BuildContext context, String title, String type,
-      List<Map<String, dynamic>> list) {
-    return SectionTitle(
-      title: title,
-      onViewMore: () {
+  Widget _buildSectionTitle(
+      BuildContext context, String title, String type, List<dynamic> list) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 32.0, right: 16.0),
+      child: SectionTitle(
+        title: title,
+        onViewMore: () {
+          Navigator.pushNamed(
+            context,
+            Strings.viewMoreScreen,
+            arguments: {'type': type, 'items': list},
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildRestaurantListContent(List<Restaurant> restaurants) {
+    return RestaurantListContent(
+      restaurants: restaurants,
+      onRestaurantTap: (Restaurant selectedRestaurant) {
         Navigator.pushNamed(
           context,
-          Strings.viewMoreScreen,
-          arguments: {'type': type, 'items': list},
+          Strings.restaurantDetailsScreen,
+          arguments: selectedRestaurant,
         );
       },
     );
   }
 
-  Widget _buildRestaurantListContent(List<Map<String, dynamic>> restaurants) {
-    List<Restaurant> restaurantsItems = restaurants.map((restaurant) {
-      return Restaurant(
-        name: restaurant['name'] ?? 'Unknown',
-        time: restaurant['time'] ?? 'Unknown',
-        imageUrl: restaurant['image'] ?? '',
-      );
-    }).toList();
-    return RestaurantListContent(restaurants: restaurantsItems);
-  }
-
-  Widget _buildPopularMenu(List<Map<String, dynamic>> meals) {
-    List<MenuItem> menuItems = meals.take(2).map((meal) {
-      return MenuItem(
-        name: meal['name'] ?? 'Unknown',
-        restaurantName: meal['restaurantName'] ?? 'Unknown',
-        imageUrl: meal['image'] ?? '',
-        price: meal['price'] ?? '0.00',
-      );
-    }).toList();
-
-    return PopularMenu(meals: menuItems);
+  Widget _buildPopularMenu(List<FilteredMeal> meals) {
+    List<FilteredMeal> viewedMeals = [];
+    if (meals.length > 2) {
+      viewedMeals.add(meals[0]);
+      viewedMeals.add(meals[1]);
+    } else {
+      viewedMeals = meals;
+    }
+    return PopularMenu(meals: viewedMeals);
   }
 }

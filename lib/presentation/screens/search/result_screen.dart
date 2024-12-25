@@ -3,8 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/core/resources/strings.dart';
 import 'package:food_app/domain/bloc/search/search_bloc.dart';
 import 'package:food_app/domain/bloc/search/search_state.dart';
-import 'package:food_app/domain/models/menu_item.dart';
-import 'package:food_app/domain/models/restaurants.dart';
+import 'package:food_app/domain/models/filtered_meal.dart';
+import 'package:food_app/domain/models/meal.dart';
+import 'package:food_app/domain/models/restaurant.dart';
 import 'package:food_app/presentation/screens/search/search_presenter.dart';
 import 'package:food_app/presentation/widgets/header_widget.dart';
 import 'package:food_app/presentation/widgets/popular_menu_widget.dart';
@@ -30,7 +31,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
   late String mealName;
   late String type;
   late List<String> selectedFilters;
-  late List<dynamic> value;
+  late List<FilteredMeal?> value;
   late final SearchBloc searchBloc;
   late SearchPresenter searchPresenter;
 
@@ -52,6 +53,8 @@ class _ResultsScreenState extends State<ResultsScreen> {
   void handleItemDeleted(int index) {
     if (index == 0 && location.isNotEmpty) {
       location = "";
+    } else if (index > 0 && location.isNotEmpty) {
+      foods.removeAt(index - 1);
     } else {
       foods.removeAt(index);
     }
@@ -74,11 +77,12 @@ class _ResultsScreenState extends State<ResultsScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildHeader(),
-            selectedFilters.isNotEmpty ?
-            HorizontalListView(
-              items: selectedFilters,
-              onItemDeleted: handleItemDeleted,
-            ): const SizedBox.shrink(),
+            selectedFilters.isNotEmpty
+                ? HorizontalListView(
+                    items: selectedFilters,
+                    onItemDeleted: handleItemDeleted,
+                  )
+                : const SizedBox.shrink(),
             Expanded(
               child: BlocListener<SearchBloc, SearchState>(
                 listener: (context, state) {
@@ -106,28 +110,21 @@ class _ResultsScreenState extends State<ResultsScreen> {
                           style: TextStyles.mainTitle(),
                         ),
                       );
+                    } else {
+                      return type == "Meals"
+                          ? _buildPopularMenu(
+                              value
+                                  .where((meal) => meal != null)
+                                  .cast<FilteredMeal>()
+                                  .toList(),
+                            )
+                          : _buildRestaurantListContent(
+                              convertFilteredMealsToRestaurants(value)
+                                  .where((restaurant) => restaurant != null)
+                                  .cast<Restaurant>()
+                                  .toList(),
+                            );
                     }
-
-                    return type == "Meals"
-                        ? _buildPopularMenu(
-                            value.map((meal) {
-                              return {
-                                'name': meal['meal_name'] ?? "",
-                                'restaurantName': meal['restaurant_name'] ?? "",
-                                'image': meal['meal_image'] ?? "",
-                                'price': meal['meal_price'].toString(),
-                              };
-                            }).toList(),
-                          )
-                        : _buildRestaurantListContent(
-                            value.map((restaurant) {
-                              return {
-                                'name': restaurant['restaurant_name'] ?? "",
-                                'time': restaurant['restaurant_time'] ?? "",
-                                'image': restaurant['restaurant_image'] ?? "",
-                              };
-                            }).toList(),
-                          );
                   },
                 ),
               ),
@@ -138,28 +135,50 @@ class _ResultsScreenState extends State<ResultsScreen> {
     );
   }
 
-  Widget _buildRestaurantListContent(List<Map<String, dynamic>> restaurants) {
-    List<Restaurant> restaurantItems = restaurants.map((restaurant) {
-      return Restaurant(
-        name: restaurant['name'] ?? 'Unknown',
-        time: restaurant['time'] ?? 'Unknown',
-        imageUrl: restaurant['image'] ?? '',
+  List<Restaurant?> convertFilteredMealsToRestaurants(
+      List<FilteredMeal?> filteredMeals) {
+    final List<Restaurant> restaurants = [];
+
+    for (var meal in filteredMeals) {
+      final restaurant = Restaurant(
+        name: meal!.restaurantName,
+        location: meal.location,
+        rate: meal.restaurantRate,
+        time: meal.restaurantTime,
+        logo: meal.restaurantLogo,
+        description: meal.restaurantDescription,
+        image: meal.restaurantImage,
+        meals: [
+          Meal(
+              name: meal.mealName,
+              price: meal.mealPrice,
+              image: meal.mealImage,
+              rate: meal.mealRate,
+              type: meal.type),
+        ],
       );
-    }).toList();
-    return RestaurantGridContent(restaurants: restaurantItems);
+
+      restaurants.add(restaurant);
+    }
+
+    return restaurants;
   }
 
-  Widget _buildPopularMenu(List<Map<String, dynamic>> meals) {
-    List<MenuItem> menuItems = meals.map((meal) {
-      return MenuItem(
-        name: meal['name'] ?? 'Unknown',
-        restaurantName: meal['restaurantName'] ?? 'Unknown',
-        imageUrl: meal['image'] ?? '',
-        price: meal['price'] ?? '0.00',
-      );
-    }).toList();
+  Widget _buildRestaurantListContent(List<Restaurant> restaurants) {
+    return RestaurantGridContent(
+      restaurants: restaurants,
+      onRestaurantTap: (Restaurant selectedRestaurant) {
+        Navigator.pushNamed(
+          context,
+          Strings.restaurantDetailsScreen,
+          arguments: selectedRestaurant,
+        );
+      },
+    );
+  }
 
-    return PopularMenu(meals: menuItems);
+  Widget _buildPopularMenu(List<FilteredMeal> meals) {
+    return PopularMenu(meals: meals);
   }
 
   Widget _buildHeader() {

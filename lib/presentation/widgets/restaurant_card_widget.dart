@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/core/resources/strings.dart';
-import 'package:food_app/domain/models/restaurants.dart';
+import 'package:food_app/domain/models/meal.dart';
+import 'package:food_app/domain/models/restaurant.dart';
+import 'package:food_app/presentation/widgets/inside_menu_card.dart';
 import 'package:food_app/styles/text_styles.dart';
 
 class RestaurantCard extends StatelessWidget {
@@ -31,7 +33,7 @@ class RestaurantCard extends StatelessWidget {
             padding: const EdgeInsets.only(right: 16, left: 16, top: 16),
             child: FadeInImage.assetNetwork(
               placeholder: Strings.loadingImage,
-              image: restaurant.imageUrl,
+              image: restaurant.logo,
               height: 90,
               width: 100,
               fit: BoxFit.contain,
@@ -59,8 +61,13 @@ class RestaurantCard extends StatelessWidget {
 
 class RestaurantListContent extends StatelessWidget {
   final List<Restaurant> restaurants;
+  final Function(Restaurant) onRestaurantTap;
 
-  const RestaurantListContent({super.key, required this.restaurants});
+  const RestaurantListContent({
+    super.key,
+    required this.restaurants,
+    required this.onRestaurantTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +82,10 @@ class RestaurantListContent extends StatelessWidget {
             final restaurant = restaurants[index];
             return Padding(
               padding: const EdgeInsets.only(right: 10.0),
-              child: RestaurantCard(restaurant: restaurant),
+              child: GestureDetector(
+                onTap: () => onRestaurantTap(restaurant),
+                child: RestaurantCard(restaurant: restaurant),
+              ),
             );
           },
         ),
@@ -86,8 +96,13 @@ class RestaurantListContent extends StatelessWidget {
 
 class RestaurantGridContent extends StatelessWidget {
   final List<Restaurant> restaurants;
+  final Function(Restaurant) onRestaurantTap;
 
-  const RestaurantGridContent({super.key, required this.restaurants});
+  const RestaurantGridContent({
+    super.key,
+    required this.restaurants,
+    required this.onRestaurantTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +120,41 @@ class RestaurantGridContent extends StatelessWidget {
         itemCount: restaurants.length,
         itemBuilder: (context, index) {
           final restaurant = restaurants[index];
-          return RestaurantCard(restaurant: restaurant);
+          return Padding(
+            padding: const EdgeInsets.only(right: 10.0),
+            child: GestureDetector(
+              onTap: () => onRestaurantTap(restaurant),
+              child: RestaurantCard(restaurant: restaurant),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class MealGridContent extends StatelessWidget {
+  final List<Meal> meals;
+
+  const MealGridContent({super.key, required this.meals});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: GridView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 10.0,
+          mainAxisSpacing: 10.0,
+          childAspectRatio: 3.5 / 4,
+        ),
+        itemCount: meals.length,
+        itemBuilder: (context, index) {
+          final meal = meals[index];
+          return InsideMenuCard(meal: meal);
         },
       ),
     );

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/core/resources/strings.dart';
-import 'package:food_app/domain/models/menu_item.dart';
+import 'package:food_app/domain/models/filtered_meal.dart';
 import 'package:food_app/styles/text_styles.dart';
 
 class PopularMenu extends StatelessWidget {
-  final List<MenuItem> meals;
+  final List<FilteredMeal> meals;
 
   const PopularMenu({super.key, required this.meals});
 
@@ -17,7 +17,7 @@ class PopularMenu extends StatelessWidget {
 }
 
 class MenuCard extends StatelessWidget {
-  final MenuItem meal;
+  final FilteredMeal meal;
 
   const MenuCard({super.key, required this.meal});
 
@@ -43,12 +43,12 @@ class MenuCard extends StatelessWidget {
         height: 87,
         child: Row(
           children: [
-            if (meal.imageUrl.isNotEmpty)
+            if (meal.mealImage.isNotEmpty)
               ClipRRect(
                 borderRadius: BorderRadius.circular(15),
                 child: FadeInImage.assetNetwork(
                   placeholder: Strings.loadingImage,
-                  image: meal.imageUrl,
+                  image: meal.mealImage,
                   height: 64,
                   width: 64,
                   fit: BoxFit.contain,
@@ -61,7 +61,7 @@ class MenuCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    meal.name,
+                    meal.mealName,
                     style: TextStyles.cardTitle(),
                   ),
                   const SizedBox(height: 4),
@@ -78,7 +78,7 @@ class MenuCard extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8),
                   child: Text(
-                    meal.price,
+                    meal.mealPrice,
                     style: TextStyles.priceText(context),
                   ),
                 ),

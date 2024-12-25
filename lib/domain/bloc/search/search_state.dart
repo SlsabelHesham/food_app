@@ -1,3 +1,5 @@
+import 'package:food_app/domain/models/filtered_meal.dart';
+
 abstract class SearchState {}
 
 class SearchInitial extends SearchState {}
@@ -6,7 +8,7 @@ class SearchLoading extends SearchState {}
 
 class SearchLoaded extends SearchState {
   final String type;
-  final List<Map<String, dynamic>> restaurants;
+  final List<FilteredMeal?> restaurants;
 
   SearchLoaded({required this.type, required this.restaurants});
 }
